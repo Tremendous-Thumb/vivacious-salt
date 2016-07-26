@@ -17,8 +17,9 @@ var sequelize = new Sequelize(config.herokuPostgresAuth, {
     timestamps: false
   }
 });
-// FOR LOCAL
+// FOR LOCAL use
 // const sequelize = new Sequelize('postgres://localhost:5432/challenges')
+
 // user model
 const User = sequelize.define('user', {
   name: Sequelize.STRING(100),
