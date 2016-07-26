@@ -8,7 +8,7 @@ var sequelize = new Sequelize(config.herokuPostgresAuth, {
   dialect: 'postgres',
   protocol: 'postgres',
   port: 5432,
-  host: 'ec2-54-243-199-79.compute-1.amazonaws.com',
+  host: 'ec2-54-225-243-220.compute-1.amazonaws.com',
   dialectOptions: {
     ssl: true,
   },
@@ -17,6 +17,8 @@ var sequelize = new Sequelize(config.herokuPostgresAuth, {
     timestamps: false
   }
 });
+// FOR LOCAL use
+// const sequelize = new Sequelize('postgres://localhost:5432/challenges')
 
 // user model
 const User = sequelize.define('user', {
@@ -42,7 +44,7 @@ const Challenge = sequelize.define('challenge', {
 });
 
 // Users_challenge model
-const Users_challenge = sequelize.define('users_challenge', {
+const Users_challenge = sequelize.define('users_challenges', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -66,10 +68,10 @@ Challenge.belongsToMany(User, { through: Users_challenge });
 // create foreign key contraint for Proof table
 Users_challenge.hasMany(Proof);
 
+Users_challenge.sync();
 User.sync();
 Type.sync();
 Challenge.sync();
-Users_challenge.sync();
 Proof.sync();
 
 exports.User = User;
