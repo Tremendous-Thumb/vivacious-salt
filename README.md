@@ -20,13 +20,13 @@ New Challenger is a brand new web app for issuing challenges to the world and tr
 
 ## Usage
 
-After downloading or cloning, run npm install. There is a post-install npm script that will build and compile the client files using webpack. 
+After downloading or cloning, run npm install. There is a post-install npm script that will build and compile the client files using webpack.
 
-Use psql (postgreSQL) for database, whether local or remote. Make sure to create the database and pass in user/pw, and connect to the database source as an environment variable. 
+Use psql (postgreSQL) for database, whether local or remote. Make sure to create the database and pass in user/pw, and connect to the database source as an environment variable.
 
 Be sure to get Facebook Client Key & Secret for authorization.
 
-For starting the app, run node server/server.js or deploy remotely. 
+For starting the app, run node server/server.js or deploy remotely.
 ## Requirements
 
 - Node 6.2.x
