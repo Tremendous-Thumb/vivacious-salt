@@ -72,9 +72,9 @@ Type.sync();
 Challenge.sync();
 Proof.sync();
 
-exports.User = User;
-exports.Type = Type;
-exports.Challenge = Challenge;
-exports.Users_challenge = Users_challenge;
-exports.Proof = Proof;
-exports.sequelize = sequelize;
+module.exports.User = User;
+module.exports.Type = Type;
+module.exports.Challenge = Challenge;
+module.exports.Users_challenge = Users_challenge;
+module.exports.Proof = Proof;
+module.exports.sequelize = sequelize;

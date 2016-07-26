@@ -166,30 +166,31 @@ module.exports = {
 
     create: (req, res) => {
       // this finds the user using the facebookId from session
-      model.User.find({ where: { facebookId: req.body.userId } })
-
+      console.log('find the user', req.body);
+      return model.User.find({ where: { id: req.body.userId } })
       // this finds or creates the data for the types table
       .then((user) => {
-        model.Type.findOrCreate({ where: { name: req.body.type } })
-
-        // this adds the data to the challenge table
-        .then((type) => {
-          model.Challenge.create({
-            name: req.body.name,
-            description: req.body.description,
-            url: req.body.url,
-            challengers: 0,
-            successes: 0,
-            userId: req.body.userId,
-            typeId: type[0].dataValues.id,
-            // end date is two weeks from date created
-            endTime: new Date(+new Date + 12096e5),
-          }).then((challenge) => {
-            res.json({'challengeCreated': true});
-          });
-          res.send('Challenge created')
+        console.log('user found', user);
+        return model.Type.findOrCreate({ where: { name: req.body.type } })
+      })
+      .then((type) => {
+        console.log('create challenge');
+        return model.Challenge.create({
+          name: req.body.name,
+          description: req.body.description,
+          url: req.body.url,
+          challengers: 0,
+          successes: 0,
+          userId: req.body.userId,
+          typeId: type[0].dataValues.id,
+          // end date is two weeks from date created
+          endTime: new Date(+new Date + 12096e5),
         });
+      })
+      .then((challenge) => {
+        return res.json({'challengeCreated': true});
       });
+        // res.send('Challenge created')
     },
 
     accept: (req, res) => {
