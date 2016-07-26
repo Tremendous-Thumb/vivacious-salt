@@ -1,10 +1,8 @@
 const Sequelize = require('sequelize');
-const pg = require('pg');
-const pgHstore = require('pg-hstore');
-const config = require('../config/config.js')
+const config = require('../config/config.js');
 
 // setup connection with postgresdb
-var sequelize = new Sequelize(config.herokuPostgresAuth, {
+const sequelize = new Sequelize(config.herokuPostgresAuth, {
   dialect: 'postgres',
   protocol: 'postgres',
   port: 5432,

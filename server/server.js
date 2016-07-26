@@ -18,11 +18,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, '../client/public')));
 
-// enables passport sessions to will store information from facebook 
-app.use(session({ 
+// enables passport sessions to will store information from facebook
+app.use(session({
   secret: 'vivacious-salt',
   resave: true,
-  saveUninitialized: true 
+  saveUninitialized: true
 }));
 
 app.use(passport.initialize());
@@ -30,7 +30,7 @@ app.use(passport.session());
 
 // routes for facebook authentication and return path after authentication
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/'}), 
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/'}),
   function(req, res) {
     // req.user contains session information, can run other functions before redirecting user to new page
     res.redirect('/');
@@ -52,4 +52,3 @@ app.get('*', function(req, res) {
 app.listen(port, function() {
   console.log('Listening on port', port);
 });
-

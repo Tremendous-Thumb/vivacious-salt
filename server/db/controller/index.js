@@ -8,70 +8,72 @@ module.exports = {
       model.User.findAll().then((users) => {
         const usersAll = users.map(user => user.dataValues);
         res.json(usersAll);
-      })
+      });
     },
     get: (req, res) => {
       // gets facebook id saved in passport session
       // information is saved as a string within sessionStore
-      var facebookSession = req.sessionStore.sessions;
-      var faceId;
+      const facebookSession = req.sessionStore.sessions;
+      let faceId;
       for (var key in facebookSession) {
         var fid = JSON.parse(facebookSession[key])
         if (fid.passport) {
           faceId = fid.passport.user.id;
         }
       }
-      let userInfo;
+      let userInfo
+      let userObj;
       // search for user from facebookId req.user is the session information stored in every req
       // model.User.find({ where: { facebookId: req.user.id } })
       model.User.find({ where: { facebookId: faceId } })
       .then((user) => {
+        userObj = user;
         userInfo = user.dataValues;
         // search for all challenges created by user
-        model.Challenge.findAll({ where: { userId: user.dataValues.id } })
-          .then((challenges) => {
-            // saves all challenges created by user to challengesCreated
-            userInfo.challengesCreated = challenges.map(challenge => challenge.dataValues);
+        return model.Challenge.findAll({ where: { userId: user.dataValues.id } })
+      })
+      .then((challenges) => {
+        // saves all challenges created by user to challengesCreated
+        userInfo.challengesCreated = challenges.map(challenge => challenge.dataValues);
+        // search and save all challenges taken by user
+        // search Users_challenges table records with user's id
+        return model.Users_challenge.findAll({ where: { userId: userObj.dataValues.id } })
+      })
+      .then((userChallenges) => {
+        // for each entry in Uses'_challenge table search Challenes table for data
+        const arrayOfPromises = userChallenges.map(userChallenge =>
+           model.Challenge.find({ where: { id: userChallenge.dataValues.challengeId } })
+        );
 
-            // search and save all challenges taken by user
-            // search Users_challenges table records with user's id
-            model.Users_challenge.findAll({ where: { userId: user.dataValues.id } })
-            .then((userChallenges) => {
-              // for each entry in Uses'_challenge table search Challenes table for data
-              const arrayOfPromises = userChallenges.map(userChallenge =>
-                 model.Challenge.find({ where: { id: userChallenge.dataValues.challengeId } })
-              );
-
-              Promise.all(arrayOfPromises).then((arrayOfChallengesTaken) => {
-                // save all challenesTaken to results.challengesTaken
-                userInfo.challengesTaken = arrayOfChallengesTaken.map(challengesTaken =>
-                  challengesTaken.dataValues);
-
-                // search and save all challenges completed and approved
-                // search Users_challenges table to find all approved user challenges
-                model.Users_challenge.findAll({
-                  where: { userId: user.dataValues.id },
-                  include: [{
-                    model: model.Proof,
-                    where: { creatorAccepted: true },
-                  }],
-                }).then((approvedChallenges) => {
-                  const arrayOfApprovedChallenges = approvedChallenges.map(approvedChallenge =>
-                    model.Challenge.find({ where: approvedChallenge.dataValues.challengeId }));
-
-                  Promise.all(arrayOfApprovedChallenges).then((resolvedChallenges) => {
-
-                    userInfo.challengesCompleted = resolvedChallenges.map(challenge =>
-                      challenge.dataValues);
-                    // returns object will all users each of the challenges they have created,
-                    // each of the challenges they have accepted, and each of the challenges they
-                    // have completed
-                    res.json(userInfo);
-                  });
-                });
-              });
-            });
-          });
+        return Promise.all(arrayOfPromises);
+      })
+      .then((arrayOfChallengesTaken) => {
+        // save all challenesTaken to results.challengesTaken
+        userInfo.challengesTaken = arrayOfChallengesTaken
+          .map(challengesTaken => challengesTaken.dataValues);
+        // search and save all challenges completed and approved
+        // search Users_challenges table to find all approved user challenges
+        return model.Users_challenge.findAll({
+          where: { userId: userObj.dataValues.id },
+          include: [{
+            model: model.Proof,
+            where: { creatorAccepted: true },
+          }],
+        });
+      })
+      .then((approvedChallenges) => {
+        const arrayOfApprovedChallenges = approvedChallenges
+          .map(approvedChallenge => model.Challenge
+              .find({ where: approvedChallenge.dataValues.challengeId }));
+        return Promise.all(arrayOfApprovedChallenges);
+      })
+      .then((resolvedChallenges) => {
+        userInfo.challengesCompleted = resolvedChallenges.map(challenge =>
+          challenge.dataValues);
+        // returns object will all users each of the challenges they have created,
+        // each of the challenges they have accepted, and each of the challenges they
+        // have completed
+        return res.json(userInfo);
       });
     },
   },
@@ -84,7 +86,7 @@ module.exports = {
       .then((challenges) => {
         challengesArray = challenges.map(challenge => challenge.dataValues);
 
-        // takes each challenge and adds requests list of users who have accepted 
+        // takes each challenge and adds requests list of users who have accepted
         // the challenge
         const arrayUsersWhoAcceptedChallenge = challengesArray.map(challenge =>
           model.User.findAll({
@@ -270,4 +272,3 @@ module.exports = {
     },
   },
 };
-
