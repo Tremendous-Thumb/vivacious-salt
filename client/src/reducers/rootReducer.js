@@ -9,6 +9,7 @@ import { playersOfUserChallenges } from './playersOfUserChallenges';
 // add new or update challenges and users
 function entities(state = { users: {}, challenges: {} }, action) {
   if (action.entities) {
+    console.log(state) 
     return merge({}, state, action.entities);
   }
   return state;
@@ -22,7 +23,7 @@ function currentUser(state = null, action) {
   if(action.user) {
     console.log('there is a user logged in', action.user);
     return action.user;
-  } 
+  }
   return state;
 }
 

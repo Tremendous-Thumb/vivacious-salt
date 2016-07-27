@@ -3,10 +3,12 @@ import ChallengeList from './ChallengeList.jsx';
 
 // THIS IS NOT BEING USED RIGHT NOW, NO ROUTES TO IT
 const UserProfile = ({ entities, currentUser }) => {
+  console.log('what is this', currentUser);
+  console.log('is this valid', entities);
   const user = entities.users[currentUser];
   const idsToChallenges = function(ids) {
     return ids.map(id => entities.challenges[id]);
-  };  
+  };
   return (
     <div>
       <div>
@@ -34,7 +36,7 @@ const UserProfile = ({ entities, currentUser }) => {
 
 UserProfile.propTypes = {
   entities: React.PropTypes.object.isRequired,
-  currentUser: React.PropTypes.number.isRequired 
+  currentUser: React.PropTypes.number.isRequired
 };
 
 export default UserProfile;

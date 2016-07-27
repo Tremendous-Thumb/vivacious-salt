@@ -18,7 +18,7 @@ class App extends React.Component {
         if (!res.ok) {
           throw Error(res.statusText);
         }
-        return res.json();   
+        return res.json();
        })
       .then(json => this.props.loginUser(json))
       .catch(err => console.log('ERROR GETTING USEA', err));
@@ -27,7 +27,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <Navigation />    
+        <Navigation />
 
           {/*Passes this redux state to first children*/}
         {React.cloneElement(this.props.children, this.props)}
