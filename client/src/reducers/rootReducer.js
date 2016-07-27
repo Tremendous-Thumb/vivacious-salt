@@ -22,23 +22,9 @@ function currentUser(state = null, action) {
   if(action.user) {
     console.log('there is a user logged in', action.user);
     return action.user;
-  } 
+  }
   return state;
 }
-
-/*
-function challengeList(state = [], action) {
-  switch (action.type) {
-    case 'UPDATE_CHALLENGE_LIST':
-      console.log('Inside update challenge list', action.challenge);
-      return state.concat(action.challenge);
-    case 'FAIL_CREATE_CHALLENGE':
-      //return Object.assign({}, state, {})
-    default :
-      return state;
-  }
-}
-*/
 
 const rootReducer = combineReducers(
   {entities, currentUser, playersOfUserChallenges, challengeList, routing: routerReducer}

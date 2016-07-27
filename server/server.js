@@ -36,6 +36,11 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRe
     // req.user contains session information, can run other functions before redirecting user to new page
     res.redirect('/');
   });
+  
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+  });
 
 // db routes to get or post information
 app.get('/user', db.user.get);
@@ -48,7 +53,11 @@ app.post('/:challengeId/updateChallenge', db.challenge.update);
 
 
 //https://github.com/reactjs/react-router-tutorial/tree/master/lessons/13-server-rendering
-app.get('*', function(req, res) {
+app.get('/splash', function(req, res) {
+  res.sendFile(path.join(__dirname, '/../client/public/splash.html'));
+});
+
+app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '/../client/public/index.html'));
 });
 
