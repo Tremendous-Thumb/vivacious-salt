@@ -1,4 +1,5 @@
 const model = require('../sequelize.js');
+const deleteChallenge = require('./deleteChallenge.js');
 const Promise = require('bluebird');
 
 module.exports = {
@@ -235,6 +236,8 @@ module.exports = {
           });
       });
     },
+    
+    delete: deleteChallenge,
 
     // this will approve the userChallenge in the proof table
     // not implemented yet

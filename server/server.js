@@ -7,7 +7,7 @@ const passportFacebook = require('./passport.js');
 const session = require('express-session');
 const db = require('./db/controller/index.js');
 const model = require('./db/sequelize.js');
-const util = require('./middleware.js');
+const mid = require('./middleware.js');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -36,7 +36,7 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRe
     // req.user contains session information, can run other functions before redirecting user to new page
     res.redirect('/');
   });
-  
+
   app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
@@ -44,12 +44,13 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRe
 
 // db routes to get or post information
 app.get('/user', db.user.get);
-app.get('/challenges', util.protectApi, db.challenge.getAll);
-app.get('/users', util.protectApi, db.user.getAll);
+app.get('/challenges', mid.protectApi, db.challenge.getAll);
+app.get('/users', mid.protectApi, db.user.getAll);
 app.get('/userInfo', db.user.get);
-app.post('/signup', util.checkMultipleSignUp, db.challenge.accept);
+app.post('/signup', mid.checkMultipleSignUp, db.challenge.accept);
 app.post('/createChallenge', db.challenge.create);
 app.post('/:challengeId/updateChallenge', db.challenge.update);
+app.get('/delete/:challengeId', db.challenge.delete);
 
 
 //https://github.com/reactjs/react-router-tutorial/tree/master/lessons/13-server-rendering

@@ -24,7 +24,10 @@ class AdminPanel extends React.Component {
     }
   }
 
-
+  deleteChallengeClick(e) {
+    e.preventDefault();
+    this.props.deleteChallenge(this.props.params.challengeId);
+  }
 
   render() {
     // get challenge id from url
@@ -53,7 +56,7 @@ class AdminPanel extends React.Component {
           <br />
           <div>Start: {moment(challenge.createdAt).format("MM/DD/YY")} </div>
           <div>End: {moment(challenge.endTime).format("MM/DD/YY")} </div>
-          <RaisedButton label="Delete this challenge" backgroundColor="#e22114"/>
+          <a href={'/delete/' + id}><RaisedButton label="Delete this challenge" backgroundColor="#e22114"/></a>
           <PendingApprovalList players={this.props.playersOfUserChallenges[id]} handleClick={this.props.adminClick.bind(null, id)} entities={this.props.entities} />
         </CardText>
       </Card>
