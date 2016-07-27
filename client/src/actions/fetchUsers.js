@@ -12,7 +12,7 @@ export function receiveUsers(users) {
 
 export function fetchUsers(challengeId, userType) {
   return function(dispatch) {
-    return fetch('http://localhost:3000/users')
+    return fetch('http://localhost:3000/users?origin=true')
       .then(res => {
         if (!res.ok) {
           throw new Error(res.statusText);

@@ -14,6 +14,7 @@ module.exports = {
       // gets facebook id saved in passport session
       // information is saved as a string within sessionStore
       const facebookSession = req.sessionStore.sessions;
+      console.log('facebook session', req.sessionStore.sessions);
       let faceId;
       for (var key in facebookSession) {
         var fid = JSON.parse(facebookSession[key])
@@ -23,9 +24,10 @@ module.exports = {
       }
       let userInfo
       let userObj;
+      console.log('facebook id', fid);
       // search for user from facebookId req.user is the session information stored in every req
       // model.User.find({ where: { facebookId: req.user.id } })
-      model.User.find({ where: { facebookId: faceId } })
+      model.User.findOne({ where: { facebookId: faceId } })
       .then((user) => {
         userObj = user;
         userInfo = user.dataValues;
@@ -192,7 +194,9 @@ module.exports = {
       });
         // res.send('Challenge created')
     },
-
+    update: (req, res) => {
+      console.log('heard ya with', req.params.id, 'and', req.body);
+    },
     accept: (req, res) => {
       // grabs the userid of the user who accepted the challenge
       var facebookSession = req.sessionStore.sessions;

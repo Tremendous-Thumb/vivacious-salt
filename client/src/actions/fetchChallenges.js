@@ -12,7 +12,7 @@ export function receiveChallenges(challenges) {
 
 export function fetchChallenges() {
   return function(dispatch) {
-    return fetch('http://localhost:3000/challenges')
+    return fetch('http://localhost:3000/challenges?origin=true')
       .then(res => {
         if (!res.ok) {
           throw Error(res.statusText);
