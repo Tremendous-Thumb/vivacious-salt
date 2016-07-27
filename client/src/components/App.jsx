@@ -19,7 +19,7 @@ class App extends React.Component {
           console.log('response not ok');
           throw Error(res.statusText);
         }
-        return res.json();   
+        return res.json();
        })
       .then(json => {
         this.props.loginUser(json);
@@ -30,7 +30,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <Navigation challenges={this.props.challengeList.items} entities={this.props.entities} currentUser={this.props.currentUser} addPlayer={this.props.addPlayer} signUpChallenge={this.props.signUpChallenge} history={this.props.history}/>    
+        <Navigation challenges={this.props.challengeList.items} entities={this.props.entities} currentUser={this.props.currentUser} addPlayer={this.props.addPlayer} signUpChallenge={this.props.signUpChallenge} history={this.props.history}/>
+        <Navigation />
 
           {/*Passes this redux state to first children*/}
         {React.cloneElement(this.props.children, this.props)}

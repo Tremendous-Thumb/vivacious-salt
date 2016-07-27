@@ -1,6 +1,7 @@
 import React from 'react';
 import ChallengeList from './ChallengeList.jsx';
 
+<<<<<<< 55d29fe651c9a3327766271d037a3cd6e536e75b
 const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChallenge }) => {
   
   const idsToChallenges = function(challenges) {
@@ -9,6 +10,16 @@ const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChalle
     });
   };
 
+=======
+// THIS IS NOT BEING USED RIGHT NOW, NO ROUTES TO IT
+const UserProfile = ({ entities, currentUser }) => {
+  console.log('what is this', currentUser);
+  console.log('is this valid', entities);
+  const user = entities.users[currentUser];
+  const idsToChallenges = function(ids) {
+    return ids.map(id => entities.challenges[id]);
+  };
+>>>>>>> 'modified user submission'
   return (
     <div>
       <div className="card">
@@ -42,7 +53,11 @@ const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChalle
 
 UserProfile.propTypes = {
   entities: React.PropTypes.object.isRequired,
+<<<<<<< 55d29fe651c9a3327766271d037a3cd6e536e75b
   currentUser: React.PropTypes.object.isRequired 
+=======
+  currentUser: React.PropTypes.number.isRequired
+>>>>>>> 'modified user submission'
 };
 
 export default UserProfile;
