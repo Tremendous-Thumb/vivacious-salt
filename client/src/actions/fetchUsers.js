@@ -31,6 +31,7 @@ export function fetchUsers(challengeId, userType) {
         if (!res.ok) {
           throw new Error(res.statusText);
         }
+        console.log('fetchUsers', res.json());
         return res.json();
       })
       .then(json => dispatch(receiveUsers(json)))

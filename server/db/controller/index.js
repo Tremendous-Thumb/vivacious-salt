@@ -8,8 +8,19 @@ module.exports = {
     getAll: (req, res) => {
       // grabs all users and maps to an array to be sent to client
       model.User.findAll().then((users) => {
-        const usersAll = users.map(user => user.dataValues);
-        res.json(usersAll);
+        var allUsers = [];
+        users.map(user => {
+          let faceId = user.dataValues.facebookId;
+          detailHelper(faceId)
+          .then((userInfo) => {
+            console.log('userInfo', userInfo);
+            let fullUserInfo = Object.assign({}, userInfo)
+            console.log('fullUserInfo', fullUserInfo);
+            console.log('allUsers', allUsers);
+            allUsers.push(fullUserInfo);
+          });
+        });
+        res.json(allUsers);
       });
     },
     get: (req, res) => {
@@ -26,8 +37,10 @@ module.exports = {
       }
       // search for user from facebookId req.user is the session information stored in every req
       // model.User.find({ where: { facebookId: req.user.id } })
-      console.log('before detailHelper');
-      detailHelper(req, res, faceId);
+      detailHelper(faceId)
+      .then((userInfo) => {
+        return res.json(userInfo);
+      });
     },
   },
 
@@ -119,15 +132,12 @@ module.exports = {
 
     create: (req, res) => {
       // this finds the user using the facebookId from session
-      console.log('find the user', req.body);
       return model.User.find({ where: { id: req.body.userId } })
       // this finds or creates the data for the types table
       .then((user) => {
-        console.log('user found', user);
         return model.Type.findOrCreate({ where: { name: req.body.type } })
       })
       .then((type) => {
-        console.log('create challenge');
         return model.Challenge.create({
           name: req.body.name,
           description: req.body.description,
@@ -232,14 +242,11 @@ module.exports = {
   },
 };
 
-const detailHelper = (req, res, faceId) => {
-
-  console.log('in beginning of detailHelper');
-
+const detailHelper = (faceId) => {
   let userInfo
   let userObj;
   
-  model.User.find({ where: { facebookId: faceId } })
+  return model.User.find({ where: { facebookId: faceId } })
   .then((user) => {
     userObj = user;
     userInfo = user.dataValues;
@@ -287,6 +294,7 @@ const detailHelper = (req, res, faceId) => {
     // returns object will all users each of the challenges they have created,
     // each of the challenges they have accepted, and each of the challenges they
     // have completed
-    return res.json(userInfo);
+
+    return userInfo;
   });
 };
