@@ -13,14 +13,17 @@ class App extends React.Component {
     this.props.fetchUsers();
 
     //Get current user on load
-    fetch('http://localhost:3000/user')
+    fetch('/user')
       .then(res => {
         if (!res.ok) {
+          console.log('response not ok');
           throw Error(res.statusText);
         }
         return res.json();   
        })
-      .then(json => this.props.loginUser(json))
+      .then(json => {
+        this.props.loginUser(json);
+      })
       .catch(err => console.log('ERROR GETTING USEA', err));
   }
 

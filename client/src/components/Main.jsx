@@ -1,7 +1,15 @@
 import React from 'react';
 import ChallengeList from './ChallengeList.jsx';
+import UserProfile from './UserProfile.jsx';
 
-const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUpChallenge }) => ( 
+const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUpChallenge }) => {
+
+  let profile = (<div>Profle Section is not showing</div>);
+  if (currentUser) {
+    profile =  (<UserProfile entities={entities} currentUser={currentUser} />);
+  }
+
+  return ( 
   <div>
     <div className="row center-align">
       <div className="col s12">
@@ -15,8 +23,9 @@ const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUp
         </div>
       </div>
     </div>
+    {profile}
     <ChallengeList challenges={challengeList.items} entities={entities} currentUser={currentUser} addPlayer={addPlayer} signUpChallenge={signUpChallenge} history={history} />
   </div>
-);
+);}
 
 export default Main;
