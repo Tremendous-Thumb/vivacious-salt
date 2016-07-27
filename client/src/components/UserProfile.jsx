@@ -2,7 +2,7 @@ import React from 'react';
 import ChallengeList from './ChallengeList.jsx';
 
 const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChallenge }) => {
-  
+
   const idsToChallenges = function(challenges) {
     return challenges.map(challenge => {
       return challenge.id;
@@ -38,6 +38,13 @@ const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChalle
       </div>
     </div>
   );
+};
+
+
+UserProfile.propTypes = {
+  entities: React.PropTypes.object.isRequired,
+  currentUser: React.PropTypes.object.isRequired
+
 };
 
 export default UserProfile;

@@ -5,6 +5,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { App, Main, Login, UserProfile, ChallengeContainer, AdminPanel,
         ChallengeCreateForm, PlayerView, SubmitAttempt, SubmissionReview }
+
+
 from './components/Components.js';
 
 import { Provider } from 'react-redux';
@@ -24,7 +26,9 @@ ReactDOM.render((
             <Route path=":challengeId/submission" component={SubmitAttempt} />
           </Route>
           <Route path="login" component={Login} />
-          <Route path="users/:userId" component={UserProfile} />
+          <Route path="users/:userId" component={UserProfile} >
+            <Route path="submission" component={UserProfileInfo} />
+          </Route>
         </Route>
       </Router>
     </MuiThemeProvider>
