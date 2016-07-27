@@ -192,7 +192,9 @@ module.exports = {
       });
         // res.send('Challenge created')
     },
-
+    update: (req, res) => {
+      console.log('heard ya with', req.params.id, 'and', req.body);
+    },
     accept: (req, res) => {
       // grabs the userid of the user who accepted the challenge
       var facebookSession = req.sessionStore.sessions;

@@ -60,56 +60,56 @@ class ChallengeCreateForm extends React.Component {
   render() {
     return (
     <div className="row formDiv">
-      <form 
-        name="challenge-create" 
+      <form
+        name="challenge-create"
         onSubmit={this.handleSubmit}
         className="col s10 offset-s1" >
-          <h3 className="center-align"> Create a challenge! </h3>
-          <div className="input-field">
-            <input
-              className="validate" 
-              type="text" 
-              id="challenge_name" 
-              ref="name"
-              />
-            <label htmlFor="challenge_name">Challenge Name</label>
-          </div>
+        <h3 className="center-align"> Create a challenge! </h3>
+        <div className="input-field">
+          <input
+            className="validate"
+            type="text"
+            id="challenge_name"
+            ref="name"
+          />
+          <label htmlFor="challenge_name">Challenge Name</label>
+        </div>
 
-          <div className="input-field">
-          <textarea 
+        <div className="input-field">
+          <textarea
             className="materialize-textarea"
             id="challenge_description"
             ref="description"
-            />
+          />
           <label htmlFor="challenge_description">Challenge Description</label>
-          </div>
+        </div>
 
-          <div className="input-field">
-            <SelectField 
-            value={this.state.category} 
+        <div className="input-field">
+          <SelectField
+            value={this.state.category}
             floatingLabelText="Challenge Category"
             onChange={this.handleCategory} >
-              {this.categories.map((category, i) => {
+            {this.categories.map((category, i) => {
               return (
                 <MenuItem key={i} value={category.value} primaryText={category.label} />
-                );
-               })}
-            </SelectField>
-          </div>
+              );
+            })}
+          </SelectField>
+        </div>
 
-          <div className="input-field">
-            <input
-              className="validate" 
-              type="text" 
-              id="challenge_image" 
-              ref="image"
-              />
-            <label htmlFor="challenge_image">Challenge Image Url</label>
-          </div>
+        <div className="input-field">
+          <input
+            className="validate"
+            type="text"
+            id="challenge_image"
+            ref="image"
+          />
+          <label htmlFor="challenge_image">Challenge Image Url</label>
+        </div>
 
-          <div className="center-align">
-            <RaisedButton label="Submit!" backgroundColor="#fdd835" onTouchTap={this.handleSubmit} type="submit"/>
-          </div>
+        <div className="center-align">
+          <RaisedButton label="Submit!" backgroundColor="#fdd835" onTouchTap={this.handleSubmit} type="submit"/>
+        </div>
       </form>
     </div>
     );
@@ -120,7 +120,7 @@ ChallengeCreateForm.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 // if want to validate forms https://github.com/christianalfoni/formsy-react
-/* 
+/*
 if want to use a file upload for the image rather than a image url
 <div className="file-field input-field">
   <div className="btn">

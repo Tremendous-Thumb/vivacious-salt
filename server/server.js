@@ -43,6 +43,8 @@ app.get('/users', db.user.getAll);
 app.get('/userInfo', db.user.get);
 app.post('/signup', db.challenge.accept);
 app.post('/createChallenge', db.challenge.create);
+app.post('/:challengeId/updateChallenge', db.challenge.update);
+
 
 //https://github.com/reactjs/react-router-tutorial/tree/master/lessons/13-server-rendering
 app.get('*', function(req, res) {

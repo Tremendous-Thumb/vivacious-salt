@@ -10,6 +10,7 @@ class ChallengeContainer extends React.Component {
       entities: this.props.entities,
       currentChallenge: this.props.currentChallenge,
       createChallenge: this.props.createChallenge,
+      updateChallenge: this.props.updateChallenge,
       signUpChallenge: this.props.signUpChallenge,
       currentUser: this.props.currentUser,
       loginUser: this.props.loginUser,
@@ -18,12 +19,14 @@ class ChallengeContainer extends React.Component {
       addPlayers: this.props.addPlayers,
     };
     //Pass some store props to challengeContainer's children
+    let self = this;
+    console.log('this children', this.props.children);
     return (
-      <div> 
-          {React.cloneElement(this.props.children, passedProps)}
+      <div>
+        {this.props.children && React.cloneElement(self.props.children, passedProps)};
       </div>
     )
-  } 
+  }
 }
 
 //Attach challenge actions to challenge container

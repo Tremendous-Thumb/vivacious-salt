@@ -56,8 +56,10 @@ class ChallengeListEntry extends React.Component {
   handleClick(e) {
     const id = this.props.challenge.id;
     this.props.challenge.currentChallengers.forEach(playerId => { this.props.addPlayer(id, playerId); });
-    const loc = this.props.challenge.userId === this.props.currentUser.id ? `/challenges/${id}/admin` : `/challenges/${id}`;
-    this.context.router.push(loc);
+    // const loc = this.props.challenge.userId === this.props.currentUser.id ? `/challenges/${id}/admin` : `/challenges/${id}`;
+    // don't go straight to admin view. Admins may want to see what it looks like to challengers. Give admins an optional button
+    // to see the admin version
+    this.context.router.push(`/challenges/${id}`);
   }
 
   render() {
@@ -68,7 +70,7 @@ class ChallengeListEntry extends React.Component {
         </CardMedia>
         <CardTitle style={titleStyle} title={this.props.challenge.name} subtitle={this.props.challenge.category} />
         <CardText style={textStyle}>
-          <div>{this.props.challenge.description}</div> 
+          <div>{this.props.challenge.description}</div>
           <br />
           <div>{this.props.challenge.successes} out of {this.props.challenge.challengers} challengers have completed this challenge! </div>
         </CardText>
