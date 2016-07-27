@@ -23,9 +23,7 @@ ReactDOM.render((
             <Route path=":challengeId/submission" component={SubmitAttempt} />
           </Route>
           <Route path="login" component={Login} />
-          <Route path="users/:userId" component={UserProfile} >
-            <Route path="submission" component={UserProfileInfo} />
-          </Route>
+          <Route path="users/:userId" component={UserProfile} />
         </Route>
       </Router>
     </MuiThemeProvider>

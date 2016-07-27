@@ -1,7 +1,8 @@
 import React from 'react';
+import {PropTypes} from 'react';
 import { Card, CardActions, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import { Link } from 'react-router';
 
 const buttonStyle = {
   margin: 12,
@@ -38,10 +39,19 @@ const imageStyle = {
 
 // Needs more styling depending on fields
 class ChallengeListEntry extends React.Component {
+
   constructor(props) {
     super(props);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
+  }
+
+  handleComplete() {
+    const id = this.props.challenge.id;
+    this.props.challenge.currentChallengers.forEach(playerId => { this.props.addPlayer(id, playerId); });
+    const loc = this.props.challenge.userId === this.props.currentUser.id ? `/challenges/${id}/admin` : `/challenges/${id}/submission`;
+    this.context.router.push(loc);
   }
 
   handleSignUp() {
@@ -68,12 +78,13 @@ class ChallengeListEntry extends React.Component {
         </CardMedia>
         <CardTitle style={titleStyle} title={this.props.challenge.name} subtitle={this.props.challenge.category} />
         <CardText style={textStyle}>
-          <div>{this.props.challenge.description}</div> 
+          <div>{this.props.challenge.description}</div>
           <br />
           <div>{this.props.challenge.successes} out of {this.props.challenge.challengers} challengers have completed this challenge! </div>
         </CardText>
         <CardActions>
-          <RaisedButton label="Sign Up!" style={buttonStyle} backgroundColor="#fdd835" onTouchTap={this.handleSignUp}/>
+          <RaisedButton label="Complete" style={buttonStyle} backgroundColor="#61CBFF" onTouchTap={this.handleComplete} />
+          <RaisedButton label="Sign Up!" style={buttonStyle} backgroundColor="#fdd835" onTouchTap={this.handleSignUp} />
         </CardActions>
       </Card>
     );

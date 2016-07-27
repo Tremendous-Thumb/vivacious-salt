@@ -31,7 +31,7 @@ var SubmitAttempt = React.createClass({
     return (
       <div>
         <Dropzone ref="dropzone" onDrop={this.onDrop}>
-            <div>Drag your video or image proving succussful challenge here.</div>
+            <div>Drag your video or image proving succussful challenge here. IM HEREERERE</div>
         </Dropzone>
         <div>
           <button onClick={this.onOpenClick}> Attach File </button>
