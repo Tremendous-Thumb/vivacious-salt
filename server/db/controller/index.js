@@ -7,20 +7,21 @@ module.exports = {
   user: {
     getAll: (req, res) => {
       // grabs all users and maps to an array to be sent to client
-      model.User.findAll().then((users) => {
-        var allUsers = [];
+      model.User.findAll()
+      .then((users) => {
+        var usersAllInfo = [];
         users.map(user => {
           let faceId = user.dataValues.facebookId;
           detailHelper(faceId)
           .then((userInfo) => {
-            console.log('userInfo', userInfo);
             let fullUserInfo = Object.assign({}, userInfo)
-            console.log('fullUserInfo', fullUserInfo);
-            console.log('allUsers', allUsers);
-            allUsers.push(fullUserInfo);
+            usersAllInfo.push(fullUserInfo);
+            if (usersAllInfo.length === users.length){
+              console.log('after map', usersAllInfo);
+              res.json(usersAllInfo.slice());
+            }
           });
         });
-        res.json(allUsers);
       });
     },
     get: (req, res) => {
