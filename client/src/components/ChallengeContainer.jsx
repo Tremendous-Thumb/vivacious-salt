@@ -18,6 +18,7 @@ class ChallengeContainer extends React.Component {
       adminClick: this.props.adminClick,
       addPlayers: this.props.addPlayers,
     };
+    console.log('update challenge in container', passedProps.updateChallenge)
     //Pass some store props to challengeContainer's children
     let self = this;
     console.log('this children', this.props.children);
@@ -32,7 +33,7 @@ class ChallengeContainer extends React.Component {
 //Attach challenge actions to challenge container
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as challengeActions from './../actions/challengeActions.js';
+import * as challengeActions from '../actions/challengeActions.js';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(challengeActions, dispatch);

@@ -1,7 +1,8 @@
-export default function updateChallenge(form, challengeId) {
+import {fetchChallenges} from './fetchChallenges';
+export function updateChallenge(form, challengeId) {
   return dispatch =>
     $.ajax({
-      url: '/' + challengeId + 'createChallenge',
+      url: '/' + challengeId + '/createChallenge',
       type: 'POST',
       data: JSON.stringify(form),
       contentType: 'application/json',

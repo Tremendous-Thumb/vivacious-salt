@@ -1,8 +1,12 @@
 import {TextField, SelectField, RaisedButton, MenuItem} from 'material-ui';
 import React from 'react';
-export default class EditForm {
+export default class EditForm extends React.Component{
   constructor(props) {
     super(props);
+    this.state = {
+      type: ''
+    }
+    this.id = this.props.params.challengeId;
   }
 
   handleSubmit(e) {
@@ -12,34 +16,34 @@ export default class EditForm {
       name: this.refs.name.value,
       description: this.refs.description.value,
       type: this.state.category,
-      url: this.refs.image.value
+      url: this.refs.url.value
     };
     console.log(newChallenge);
-    this.props.updateChallenge(newChallenge);
+    this.props.updateChallenge(newChallenge, this.id);
     browserHistory.push('/');
   }
 
   render() {
-    const id = props.params.challengeId;
-    const challenge = props.entities.challenges[id];
+    const id = this.props.params.challengeId;
+    const challenge = this.props.entities.challenges[id];
     const categories = [
-      { value: 'online', label: 'Online' },
-      { value: 'fitness', label: 'Fitness' },
-      { value: 'food', label: 'Food' },
-      { value: 'social', label: 'Social' },
-      { value: 'other', label: 'Other' }
+    { value: 'online', label: 'Online' },
+    { value: 'fitness', label: 'Fitness' },
+    { value: 'food', label: 'Food' },
+    { value: 'social', label: 'Social' },
+    { value: 'other', label: 'Other' }
     ];
     return (
       <div className="row formDiv">
         <form
           name="challenge-create"
-          onSubmit={props.handleSubmit}
+          onSubmit={this.handleSubmit.bind(this)}
           className="col s10 offset-s1" >
           <p className="center-align"> Edit your challenge below: </p>
           <TextField
             hintText={challenge.name}
             floatingLabelText="Challenge Name"
-            refs="name"
+            ref="name"
             floatingLabelFixed={true}
           />
           <br />
@@ -47,7 +51,7 @@ export default class EditForm {
             hintText={challenge.description}
             floatingLabelText="Challenge Description"
             multiLine={true}
-            refs="description"
+            ref="description"
             rows={2}
             floatingLabelFixed={true}
           /><br />
@@ -56,8 +60,8 @@ export default class EditForm {
             <SelectField
               hintText={challenge.category}
               floatingLabelText="Challenge Category"
-              refs="category"
-              onChange={props.handleCategory} >
+              ref="category"
+              onChange={this.props.handleCategory} >
               {categories.map((category, i) => {
                 return (
                   <MenuItem key={i} value={category.value} primaryText={category.label} />
@@ -69,11 +73,11 @@ export default class EditForm {
             hintText={challenge.url}
             floatingLabelText="Challenge Image"
             floatingLabelFixed={true}
-            refs="url"
+            ref="url"
           />
           <br />
           <div className="center-align">
-            <RaisedButton label="Submit!" backgroundColor="#fdd835" onClick={this.handleSubmit} type="submit"/>
+            <RaisedButton label="Submit!" backgroundColor="#fdd835" onClick={this.handleSubmit.bind(this)} type="submit"/>
           </div>
         </form>
       </div>

@@ -11,12 +11,10 @@ class AdminPanel extends React.Component {
   constructor(props) {
     console.log('creating admin panel');
     super(props);
-
     this.state = {
       category: ''
     }
   }
-
 
   componentWillMount() {
     //check if user is logged
@@ -48,7 +46,7 @@ class AdminPanel extends React.Component {
         </CardMedia>
         <CardTitle title={challenge.name} subtitle={challenge.category} />
         <CardText>
-          <EditForm {...this.props}/>
+          <EditForm {...this.props} challenge={challenge}/>
           <div>{challenge.successes} out of {challenge.challengers} challengers have completed this challenge! </div>
           <div>Current challengers: {challenge.currentChallengers}</div>
           <div>Completed: {challenge.successNames}</div>
