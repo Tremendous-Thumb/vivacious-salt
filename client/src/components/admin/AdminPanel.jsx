@@ -24,7 +24,7 @@ class AdminPanel extends React.Component {
       this.context.router.push('/');
     }
 
-    '/:challengeId/admin/getChallengers'
+    $.get('/:challengeId/admin/getChallengers')
   }
 
   deleteChallengeClick(e) {
