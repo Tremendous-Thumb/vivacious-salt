@@ -40,9 +40,4 @@ const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChalle
   );
 };
 
-UserProfile.propTypes = {
-  entities: React.PropTypes.object.isRequired,
-  currentUser: React.PropTypes.object.isRequired 
-};
-
 export default UserProfile;
