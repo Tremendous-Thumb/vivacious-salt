@@ -4,8 +4,8 @@ import ChallengeListEntry from './ChallengeListEntry.jsx';
 //Takes in props.challenges, and maps over to create ChallengeListEntry
 const ChallengeList = ({challenges, currentUser, entities, addPlayer, signUpChallenge }) => {
   challenges = challenges.map(id => entities.challenges[id]);
-  return ( 
-    <div> 
+  return (
+    <div>
      {challenges.map(function(challenge) {
       return (
         <div key={challenge.id}>

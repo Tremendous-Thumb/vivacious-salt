@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
-import { App, Main, Login, UserProfile, ChallengeContainer, AdminChallenge,
+import { App, Main, Login, UserProfile, ChallengeContainer, AdminPanel, AdminChallenge,
         ChallengeCreateForm, PlayerView, SubmitAttempt, UserProfileInfo }
 from './components/Components.js';
 

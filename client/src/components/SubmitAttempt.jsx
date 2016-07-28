@@ -1,7 +1,11 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
-//
+
+
+
+let s3Url;
+
 let getUrl = () => {
   return fetch('/presign')
     .then((response) => {
@@ -21,6 +25,36 @@ let getUrl = () => {
 //     console.log('whats the response', reponse);
 //   })
 
+let postVideoS3 = (data) => {
+  console.log(data);
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: 'PUT',
+      url: data.preSignedUrl,
+      processData: false,
+      contentType: 'video/webm',
+      data: data.file,
+      success: function() {
+        resolve(data);
+      },
+      error: function() {
+        reject('did not upload to s3');
+      }
+    });
+  });
+};
+
+// getUrl()
+//   .then((data) => {
+//     data.file = this.state.files;
+//     // console.log('file data', data.file);
+//     console.log('whats kind of data is this', data);
+//     return postVideoS3(data);
+//   })
+//   .catch((err) => {
+//     throw err;
+//   });
+
 class SubmitAttempt extends React.Component {
   constructor(props) {
     super(props);
@@ -31,49 +65,41 @@ class SubmitAttempt extends React.Component {
 
   componentWillMount() {
     //check if user is logged
-    if(!this.props.currentUser) {
+    if (!this.props.currentUser) {
       this.context.router.push('/');
     }
   }
 
-  onDrop(files) {
-    this.setState({
-      files: files
+  onDrop(file) {
+    this.setSate({
+      files: file
     });
+    console.log('received:', this.state.files);
   }
 
-  onOpenClick() {
-    this.refs.dropzone.open();
-    // $.ajax({
-    //   type: 'GET',
-    //   url: '/presign',
-    //   contentType: 'aplication/json',
-    //   sucess: function(data) {
-    //     console.log('got data', data);
-    //   },
-    //   error: function() {
-    //     console.log('error');
+
+
+    // let myDropzone;
+    // initCallback(dropzone) {
+    //   myDropzone = dropzone;
+    // }
+    //
+    // removefile() {
+    //   if (myDropzone) {
+    //     myDropzone.removeFile();
     //   }
-    // })
-    getUrl();
-  }
+    // }
 
 
-  submit() {
 
-  }
-  // console.log('request here', request);
 
   render() {
+
     return (
       <div>
-        <Dropzone ref="dropzone" onDrop={this.onDrop}>
-          <div>Drag your video or image proving succussful challenge here. IM HEREERERE</div>
+        <Dropzone ref='dropzone' onDrop={this.onDrop.bind(this)} >
+          <div>Drop YOUR PROOF HERE</div>
         </Dropzone>
-        <div>
-          <button onClick={this.onOpenClick.bind(this)}> Attach File </button>
-          <button onClick={this.submit.bind(this)}>Submit Proof</button>
-        </div>
         {this.state.files.length > 0 ? <div>
           <h2>Uploading {this.state.files.length} files...</h2>
           <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>

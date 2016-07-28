@@ -1,7 +1,6 @@
 import React from 'react';
 import ChallengeList from './ChallengeList.jsx';
 
-<<<<<<< 55d29fe651c9a3327766271d037a3cd6e536e75b
 const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChallenge }) => {
 
   const idsToChallenges = function(challenges) {

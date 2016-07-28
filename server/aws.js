@@ -12,7 +12,7 @@ let generateUrl = (req, res) => {
     Bucket: process.env.bucket,
     Key: 'ruwefhewfe',
     Expires: 600,
-    ContentType: 'video',
+    ContentType: 'video/webm',
     ACL: 'public-read'
   };
 
@@ -25,6 +25,7 @@ let generateUrl = (req, res) => {
  // });
 
   let preSignedUrl = s3.getSignedUrl('putObject', params);
+  console.log('what is presign', preSignedUrl);
 
   let publicUrl = 'https://s3.amazonaws.com/' + params.Bucket + '/' + params.Key;
   // res.send('something');
