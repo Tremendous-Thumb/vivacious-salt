@@ -8,7 +8,6 @@ const session = require('express-session');
 const db = require('./db/controller/index.js');
 const model = require('./db/sequelize.js');
 const mid = require('./middleware.js');
-
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -58,9 +57,12 @@ app.get('/splash', function(req, res) {
   res.sendFile(path.join(__dirname, '/../client/public/splash.html'));
 });
 
-app.get('/', function(req, res) {
+app.get('/', mid.isLoggedIn, function(req, res) {
   res.sendFile(path.join(__dirname, '/../client/public/index.html'));
+});
 
+app.get('*', function(req, res) {
+  res.redirect('/');
 });
 
 app.listen(port, function() {

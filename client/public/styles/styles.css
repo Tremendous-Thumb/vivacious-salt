@@ -4,10 +4,7 @@ html{
 }
 body{
   height:100%;
-  /*Makes the infinite polka dot background*/
-  background: radial-gradient(circle, grey 15%, transparent 10%),
-  radial-gradient(circle, grey 15%, white 15%) 30px 30px;
-  background-size:60px 60px;
+
 }
 nav{
   font-size:1.5em;
