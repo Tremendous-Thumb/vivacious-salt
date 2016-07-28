@@ -53,11 +53,7 @@ passport.use(new FacebookStrategy({
           }
         ).spread(function(user, created) {
           console.log('created: ', created);
-<<<<<<< 5234e99cfe305490fc3f4428ffdfcf1e93f5e3e6
-=======
-          done(null, user);
->>>>>>> login and logout
-
+        
         })
 
         done(null, profile);
