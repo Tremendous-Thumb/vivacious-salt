@@ -3,5 +3,6 @@
 //Import actions here
 import { createChallenge } from './createChallenge';
 import { signUpChallenge } from './signUpChallenge';
+import { updateChallenge } from './updateChallenge';
 
-export { createChallenge, signUpChallenge };
+export { createChallenge, signUpChallenge, updateChallenge };

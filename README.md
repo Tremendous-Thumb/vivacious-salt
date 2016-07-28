@@ -68,6 +68,8 @@ From within the root directory:
 npm install
 ```
 
+To build splash dependencies `gulp copy`
+
 ### Roadmap
 
 View the project roadmap [here](https://github.com/vivacioussalt/vivacious-salt/pulls?q=is%3Apr+is%3Aclosed)

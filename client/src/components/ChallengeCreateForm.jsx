@@ -4,7 +4,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import { browserHistory } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import {TextField} from 'material-ui';
 // probably want to use redux-form instead
 // http://redux-form.com/5.3.1/#/getting-started?_k=7i191c
 
@@ -12,7 +12,8 @@ class ChallengeCreateForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: ''
+      category: '',
+      reward: ''
     };
     this.categories = [
       { value: 'online', label: 'Online' },
@@ -25,12 +26,14 @@ class ChallengeCreateForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCategory = this.handleCategory.bind(this);
   }
+
   componentWillMount() {
     //check if user is logged
     if(!this.props.currentUser) {
       this.context.router.push('/');
     }
   }
+
   handleCategory(event, index, value) {
     // using materialUI
     console.log(value);
@@ -38,16 +41,20 @@ class ChallengeCreateForm extends React.Component {
       category: value
     });
   }
-
+  handleFormChanges(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
   handleSubmit(e) {
     e.preventDefault();
-
     var newChallenge = {
       userId: this.props.currentUser.id,
       name: this.refs.name.value,
       description: this.refs.description.value,
       type: this.state.category,
-      url: this.refs.image.value
+      url: this.refs.image.value,
+      reward: this.state.reward
       // image: this.refs.image.value
     };
 
@@ -60,56 +67,64 @@ class ChallengeCreateForm extends React.Component {
   render() {
     return (
     <div className="row formDiv">
-      <form 
-        name="challenge-create" 
+      <form
+        name="challenge-create"
         onSubmit={this.handleSubmit}
         className="col s10 offset-s1" >
-          <h3 className="center-align"> Create a challenge! </h3>
-          <div className="input-field">
-            <input
-              className="validate" 
-              type="text" 
-              id="challenge_name" 
-              ref="name"
-              />
-            <label htmlFor="challenge_name">Challenge Name</label>
-          </div>
+        <h3 className="center-align"> Create a challenge! </h3>
+        <div className="input-field">
+          <input
+            className="validate"
+            type="text"
+            id="challenge_name"
+            ref="name"
+          />
+          <label htmlFor="challenge_name">Challenge Name</label>
+        </div>
 
-          <div className="input-field">
-          <textarea 
+        <div className="input-field">
+          <textarea
             className="materialize-textarea"
             id="challenge_description"
             ref="description"
-            />
+          />
           <label htmlFor="challenge_description">Challenge Description</label>
-          </div>
+        </div>
 
-          <div className="input-field">
-            <SelectField 
-            value={this.state.category} 
+        <div className="input-field">
+          <SelectField
+            value={this.state.category}
             floatingLabelText="Challenge Category"
             onChange={this.handleCategory} >
-              {this.categories.map((category, i) => {
+            {this.categories.map((category, i) => {
               return (
                 <MenuItem key={i} value={category.value} primaryText={category.label} />
-                );
-               })}
-            </SelectField>
-          </div>
+              );
+            })}
+          </SelectField>
+        </div>
 
-          <div className="input-field">
-            <input
-              className="validate" 
-              type="text" 
-              id="challenge_image" 
-              ref="image"
-              />
-            <label htmlFor="challenge_image">Challenge Image Url</label>
-          </div>
+        $<TextField
+          value={this.state.reward}
+          floatingLabelText="Challenge Reward"
+          name="reward"
+          floatingLabelFixed={true}
+          onChange={this.handleFormChanges.bind(this)}
+        />
+        <br />
+        <div className="input-field">
+          <input
+            className="validate"
+            type="text"
+            id="challenge_image"
+            ref="image"
+          />
+          <label htmlFor="challenge_image">Challenge Image Url</label>
+        </div>
 
-          <div className="center-align">
-            <RaisedButton label="Submit!" backgroundColor="#fdd835" onTouchTap={this.handleSubmit} type="submit"/>
-          </div>
+        <div className="center-align">
+          <RaisedButton label="Submit!" backgroundColor="#fdd835" onTouchTap={this.handleSubmit} type="submit"/>
+        </div>
       </form>
     </div>
     );
@@ -120,7 +135,7 @@ ChallengeCreateForm.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 // if want to validate forms https://github.com/christianalfoni/formsy-react
-/* 
+/*
 if want to use a file upload for the image rather than a image url
 <div className="file-field input-field">
   <div className="btn">

@@ -56,7 +56,6 @@ class SubmitAttempt extends React.Component {
     //   }
     // })
     getUrl();
-
   }
 
 

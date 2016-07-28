@@ -66,18 +66,26 @@ class ChallengeListEntry extends React.Component {
   handleClick(e) {
     const id = this.props.challenge.id;
     this.props.challenge.currentChallengers.forEach(playerId => { this.props.addPlayer(id, playerId); });
-    const loc = this.props.challenge.userId === this.props.currentUser.id ? `/challenges/${id}/admin` : `/challenges/${id}`;
-    this.context.router.push(loc);
+    // const loc = this.props.challenge.userId === this.props.currentUser.id ? `/challenges/${id}/admin` : `/challenges/${id}`;
+    // don't go straight to admin view. Admins may want to see what it looks like to challengers. Give admins an optional button
+    // to see the admin version
+    this.context.router.push(`/challenges/${id}`);
   }
 
   render() {
+    let moneyClass = 'bling';
+    if (this.props.challenge.reward < 0) {
+      moneyClass = 'pay';
+    }
     return (
       <Card style={cardStyle} >
-        <CardMedia style={imageStyle} onTouchTap={this.handleClick}>
+        <CardMedia style={imageStyle} onClick={this.handleClick}>
           <img style={{ height: '200px', objectFit: 'contain' }} src={this.props.challenge.url} />
         </CardMedia>
         <CardTitle style={titleStyle} title={this.props.challenge.name} subtitle={this.props.challenge.category} />
         <CardText style={textStyle}>
+
+          <div className="reward">This challenge is worth <span className={moneyClass}>${this.props.challenge.reward}</span></div>
           <div>{this.props.challenge.description}</div>
           <br />
           <div>{this.props.challenge.successes} out of {this.props.challenge.challengers} challengers have completed this challenge! </div>

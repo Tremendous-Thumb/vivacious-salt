@@ -3,6 +3,7 @@ import { Router, Route, IndexRoute } from 'react-router';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+
 import { App, Main, Login, UserProfile, ChallengeContainer, AdminChallenge,
         ChallengeCreateForm, PlayerView, SubmitAttempt, UserProfileInfo }
 from './components/Components.js';
@@ -19,11 +20,13 @@ ReactDOM.render((
           <Route path="challenges" component={ChallengeContainer}>
             <Route path="create" component={ChallengeCreateForm} />
             <Route path=":challengeId" component={PlayerView} />
-            <Route path=":challengeId/admin" component={AdminChallenge} />
+            <Route path=":challengeId/admin" component={AdminPanel} />
             <Route path=":challengeId/submission" component={SubmitAttempt} />
           </Route>
           <Route path="login" component={Login} />
-          <Route path="users/:userId" component={UserProfile} />
+          <Route path="users/:userId" component={UserProfile} >
+            <Route path="submission" component={UserProfileInfo} />
+          </Route>
         </Route>
       </Router>
     </MuiThemeProvider>

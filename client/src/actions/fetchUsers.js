@@ -2,17 +2,14 @@ export function receiveUsers(users) {
   return {
     type: 'RECEIVE_USERS',
     entities: {
-      users: users.reduce((obj, user) => {
-        obj[user.id] = user;
-        return obj;
-      }, {})
+      users: users.slice()
     }
   }
 }
 
 export function fetchUsers(challengeId, userType) {
   return function(dispatch) {
-    return fetch('http://localhost:3000/users')
+    return fetch('http://localhost:3000/users?origin=true')
       .then(res => {
         if (!res.ok) {
           throw new Error(res.statusText);
