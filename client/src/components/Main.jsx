@@ -1,7 +1,10 @@
 import React from 'react';
 import ChallengeList from './ChallengeList.jsx';
+import UserProfile from './UserProfile.jsx';
 
-const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUpChallenge }) => ( 
+const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUpChallenge }) => {
+
+  return ( 
   <div>
     <div className="row center-align">
       <div className="col s12">
@@ -17,6 +20,6 @@ const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUp
     </div>
     <ChallengeList challenges={challengeList.items} entities={entities} currentUser={currentUser} addPlayer={addPlayer} signUpChallenge={signUpChallenge} history={history} />
   </div>
-);
+);}
 
 export default Main;
