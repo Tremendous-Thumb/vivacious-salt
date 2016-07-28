@@ -4,17 +4,6 @@ import UserProfile from './UserProfile.jsx';
 
 const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUpChallenge }) => {
 
-  let profile = (<div>Profle Section is not showing</div>);
-  if (currentUser) {
-    profile =  (<UserProfile className="profile"
-                             challenges={challengeList.items}
-                             entities={entities}
-                             currentUser={currentUser}
-                             addPlayer={addPlayer}
-                             signUpChallenge={signUpChallenge}
-                             history={history} />);
-  }
-
   return ( 
   <div>
     <div className="row center-align">
@@ -29,7 +18,6 @@ const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUp
         </div>
       </div>
     </div>
-    {profile}
     <br />
     <ChallengeList challenges={challengeList.items} entities={entities} currentUser={currentUser} addPlayer={addPlayer} signUpChallenge={signUpChallenge} history={history} />
   </div>

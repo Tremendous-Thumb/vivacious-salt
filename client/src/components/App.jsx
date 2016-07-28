@@ -30,7 +30,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <Navigation />    
+        <Navigation challenges={this.props.challengeList.items} entities={this.props.entities} currentUser={this.props.currentUser} addPlayer={this.props.addPlayer} signUpChallenge={this.props.signUpChallenge} history={this.props.history}/>    
 
           {/*Passes this redux state to first children*/}
         {React.cloneElement(this.props.children, this.props)}
