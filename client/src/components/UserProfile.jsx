@@ -1,33 +1,35 @@
 import React from 'react';
 import ChallengeList from './ChallengeList.jsx';
 
-const UserProfile = ({ entities, currentUser }) => {
-  const user = entities.users[currentUser.id];
-  console.log('user', entities);
-  const idsToChallenges = function(ids) {
-    return ids.map(id => entities.challenges[id]);
+const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChallenge }) => {
+  const idsToChallenges = function(challenges) {
+    return challenges.map(challenge => {
+      return challenge.id;
+    });
   };
-  console.log('profile rendered');
   return (
     <div>
       <div>
-        <img src={user.url || ''} alt=""></img>
+        <img src={currentUser.url || ''} alt=""></img>
         <span>
-          <div>{user.username}</div>
-          <div>{user.email}</div>
+          <div>{currentUser.username}</div>
+          <div>{currentUser.email}</div>
         </span>
       </div>
       <div>
         <h3>My Challenges</h3>
-        <ChallengeList challenges={idsToChallenges(user.challengesCreated || [])} />
+        {idsToChallenges(currentUser.challengesCreated || []) ? (<ChallengeList challenges={idsToChallenges(currentUser.challengesCreated || [])} entities={entities} currentUser={currentUser} addPlayer={addPlayer} signUpChallenge={signUpChallenge} history={history} />) : (<div />)}
+        <br />
       </div>
       <div>
         <h4>Current Challenges</h4>
-        <ChallengeList challenges={idsToChallenges(user.challengesTaken || [])} />
+        {idsToChallenges(currentUser.challengesTaken || []) ? (<ChallengeList challenges={idsToChallenges(currentUser.challengesTaken || [])} entities={entities} currentUser={currentUser} addPlayer={addPlayer} signUpChallenge={signUpChallenge} history={history} />) : (<div />)}
+        <br />
       </div>
       <div>
         <h4>Completed Challenges</h4>
-        <ChallengeList challenges={idsToChallenges(user.challengesCompleted || [])} />
+        {idsToChallenges(currentUser.challengesCompleted || []) ? (<ChallengeList challenges={idsToChallenges(currentUser.challengesCompleted || [])} entities={entities} currentUser={currentUser} addPlayer={addPlayer} signUpChallenge={signUpChallenge} history={history} />) : (<div />)}
+        <br />
       </div>
     </div>
   );

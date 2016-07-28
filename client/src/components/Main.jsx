@@ -6,7 +6,13 @@ const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUp
 
   let profile = (<div>Profle Section is not showing</div>);
   if (currentUser) {
-    profile =  (<UserProfile entities={entities} currentUser={currentUser} />);
+    profile =  (<UserProfile className="profile"
+                             challenges={challengeList.items}
+                             entities={entities}
+                             currentUser={currentUser}
+                             addPlayer={addPlayer}
+                             signUpChallenge={signUpChallenge}
+                             history={history} />);
   }
 
   return ( 
@@ -24,6 +30,7 @@ const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUp
       </div>
     </div>
     {profile}
+    <br />
     <ChallengeList challenges={challengeList.items} entities={entities} currentUser={currentUser} addPlayer={addPlayer} signUpChallenge={signUpChallenge} history={history} />
   </div>
 );}

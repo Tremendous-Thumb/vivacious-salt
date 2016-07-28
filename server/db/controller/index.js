@@ -17,7 +17,6 @@ module.exports = {
             let fullUserInfo = Object.assign({}, userInfo)
             usersAllInfo.push(fullUserInfo);
             if (usersAllInfo.length === users.length){
-              console.log('after map', usersAllInfo);
               res.json(usersAllInfo.slice());
             }
           });
