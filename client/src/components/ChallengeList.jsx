@@ -1,6 +1,6 @@
 import React from 'react';
 import ChallengeListEntry from './ChallengeListEntry.jsx';
-
+import _ from 'lodash';
 //Takes in props.challenges, and maps over to create ChallengeListEntry
 class ChallengeList extends React.Component {
   constructor(props) {
@@ -16,7 +16,10 @@ class ChallengeList extends React.Component {
   }
 
   render() {
-    let challenges = this.props.challenges.map(id => this.props.entities.challenges[id]);
+    let challenges = _.reduceRight(this.props.challenges, (chals, id) => {
+      chals.push(this.props.entities.challenges[id]);
+      return chals;
+    }, []);
     console.log('render challenge list');
     return (
       <div>
