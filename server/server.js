@@ -48,7 +48,7 @@ app.post('/:challengeId/updateChallenge', db.challenge.update);
 
 //https://github.com/reactjs/react-router-tutorial/tree/master/lessons/13-server-rendering
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, '/../client/public/index.html'));
+  res.sendFile(path.join(__dirname, '/../client/public/splash.html'));
 });
 
 app.listen(port, function() {

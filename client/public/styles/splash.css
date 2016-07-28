@@ -146,7 +146,7 @@ fieldset[disabled] .btn-xl.active {
   border-color: transparent;
 }
 .navbar-custom .navbar-brand {
-  color: #B6A19E;
+  color: #FBA100;
   font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;
 }
 .navbar-custom .navbar-brand:hover,
@@ -175,11 +175,11 @@ fieldset[disabled] .btn-xl.active {
   text-transform: uppercase;
   font-weight: 400;
   letter-spacing: 1px;
-  color: #B6A19E;
+  color: #FBA100;
 }
 .navbar-custom .nav li a:hover,
 .navbar-custom .nav li a:focus {
-  color: #FBA100;
+  color: #6BBAA7;
   outline: none;
 }
 .navbar-custom .navbar-nav > .active > a {
@@ -601,9 +601,6 @@ section#contact :-ms-input-placeholder {
   text-transform: uppercase;
   font-weight: 700;
   color: #eeeeee;
-}
-section#contact .text-danger {
-  color: #e74c3c;
 }
 footer {
   padding: 25px 0;
