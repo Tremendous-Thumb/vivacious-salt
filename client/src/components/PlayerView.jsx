@@ -64,6 +64,7 @@ class PlayerView extends React.Component {
         <CardText>
           <div>{challenge.description}</div>
           <br />
+          <div>${challenge.reward}</div>
           <div>{challenge.successes} out of {challenge.challengers} challengers have completed this currentChallenge! </div>
           <br />
           <div>Current challengers: {challenge.currentChallengers}</div>

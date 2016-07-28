@@ -63,13 +63,18 @@ class ChallengeListEntry extends React.Component {
   }
 
   render() {
+    let moneyClass = 'bling';
+    if(this.props.challenge.reward < 0) {
+      moneyClass = 'pay';
+    }
     return (
       <Card style={cardStyle} >
-        <CardMedia style={imageStyle} onTouchTap={this.handleClick}>
+        <CardMedia style={imageStyle} onClick={this.handleClick}>
           <img style={{ height: '200px', objectFit: 'contain' }} src={this.props.challenge.url} />
         </CardMedia>
         <CardTitle style={titleStyle} title={this.props.challenge.name} subtitle={this.props.challenge.category} />
         <CardText style={textStyle}>
+          <div className="reward">This challenge is worth <span className={moneyClass}>${this.props.challenge.reward}</span></div>
           <div>{this.props.challenge.description}</div>
           <br />
           <div>{this.props.challenge.successes} out of {this.props.challenge.challengers} challengers have completed this challenge! </div>
