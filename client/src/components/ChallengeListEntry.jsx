@@ -63,6 +63,7 @@ class ChallengeListEntry extends React.Component {
   }
 
   render() {
+    console.log('render challenge list entry');
     let moneyClass = 'bling';
     if(this.props.challenge.reward < 0) {
       moneyClass = 'pay';

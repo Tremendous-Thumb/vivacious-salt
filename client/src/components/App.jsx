@@ -13,6 +13,7 @@ class App extends React.Component {
     this.props.fetchChallenges();
     this.props.fetchUsers();
 
+    console.log('challenge list', this.props.challengeList.items);
     //Get current user on load
     fetch('/user')
       .then(res => {
