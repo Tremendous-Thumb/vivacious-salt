@@ -14,7 +14,6 @@ const Navigation = ({challenges, currentUser, entities, addPlayer, signUpChallen
     <nav className="yellow darken-2">
       <Link to="/"><span className="title">New Challenger</span></Link>
       <span className="logout right linkStyle"><a href="/logout">Log Out</a></span>
-      <span className="login right linkStyle"><a href="/auth/facebook"><img src="./images/facebook-login-button.png" onClick="" /></a></span>
       {toProfile}
       <Link to="/challenges/create"><span className="right linkStyle">Create Challenge</span></Link>
     </nav>

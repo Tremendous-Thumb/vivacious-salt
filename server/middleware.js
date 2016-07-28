@@ -35,18 +35,11 @@ module.exports.checkMultipleSignUp = function (req, res, next) {
 }
 
 module.exports.isLoggedIn = function (req, res, next) {
-  console.log('checking sessionstore', req.sessionStore)
-  const facebookSession = req.sessionStore.sessions;
-  console.log('facebook session', req.sessionStore.sessions);
-  let faceId;
-  for (var key in facebookSession) {
-    var fid = JSON.parse(facebookSession[key])
-    if (fid.passport) {
-      faceId = fid.passport.user.id;
-    }
-  }
-  if (!faceId) {
+  console.log('checking if logged in');
+  if (!req.isAuthenticated() || !req.session) {
+    console.log('redirecting to splash');
     return res.redirect('/splash');
   }
+  console.log('authorized!');
   return next();
-}
+};
