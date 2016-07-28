@@ -7,7 +7,8 @@ module.exports = function(req, res) {
     name: req.body.name,
     description: req.body.description,
     url: req.body.url,
-    endTime: req.body.endTime
+    endTime: req.body.endTime,
+    reward: req.body.reward
   }, {
   where: {
     id: req.params.challengeId

@@ -187,6 +187,7 @@ module.exports = {
           successes: 0,
           userId: req.body.userId,
           typeId: type[0].dataValues.id,
+          reward: req.body.reward,
           // end date is two weeks from date created
           endTime: new Date(+new Date + 12096e5),
         });

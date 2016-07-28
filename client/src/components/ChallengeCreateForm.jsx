@@ -4,7 +4,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import { browserHistory } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import {TextField} from 'material-ui';
 // probably want to use redux-form instead
 // http://redux-form.com/5.3.1/#/getting-started?_k=7i191c
 
@@ -43,7 +43,7 @@ class ChallengeCreateForm extends React.Component {
   }
   handleFormChanges(e) {
     this.setState({
-      [e.target.name] = e.target.value
+      [e.target.name]: e.target.value
     })
   }
   handleSubmit(e) {
@@ -104,7 +104,7 @@ class ChallengeCreateForm extends React.Component {
           </SelectField>
         </div>
 
-        <TextField
+        $<TextField
           value={this.state.reward}
           floatingLabelText="Challenge Reward"
           name="reward"

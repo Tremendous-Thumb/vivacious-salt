@@ -90,7 +90,7 @@ export default class EditForm extends React.Component{
           </SelectField>
           <br />
 
-          <TextField
+          $<TextField
             value={this.state.reward}
             floatingLabelText="Challenge Reward"
             name="reward"
