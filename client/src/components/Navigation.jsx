@@ -6,7 +6,7 @@ const Navigation = ({challenges, currentUser, entities, addPlayer, signUpChallen
 
   let toProfile = (<div />);
 
-  if (currentUser) {
+  if (currentUser && entities) {
     toProfile = (<Link to={'/users/' + currentUser.id}><span className="right linkStyle">Profile</span></Link>);
   }
 
@@ -15,8 +15,8 @@ const Navigation = ({challenges, currentUser, entities, addPlayer, signUpChallen
       <Link to="/"><span className="title">New Challenger</span></Link>
       <span className="login"><a href="/auth/facebook"><img src="./images/facebook-login-button.png" onClick="" /></a></span>
       <span className="logout"><a href="/logout">Log Out</a></span>
-      <Link to="/challenges/create"><span className="right linkStyle">Create Challenge</span></Link>
       {toProfile}
+      <Link to="/challenges/create"><span className="right linkStyle">Create Challenge</span></Link>
     </nav>
   );
 }
