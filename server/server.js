@@ -7,6 +7,7 @@ const passportFacebook = require('./passport.js');
 const session = require('express-session');
 const db = require('./db/controller/index.js');
 const model = require('./db/sequelize.js');
+const mid = require('./middleware.js');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -36,31 +37,32 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRe
     res.redirect('/');
   });
 
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+  });
+
 // db routes to get or post information
 app.get('/user', db.user.get);
-app.get('/challenges', protectApi, db.challenge.getAll);
-app.get('/users', protectApi, db.user.getAll);
+app.get('/challenges', mid.protectApi, db.challenge.getAll);
+app.get('/users', mid.protectApi, db.user.getAll);
 app.get('/userInfo', db.user.get);
-app.post('/signup', db.challenge.accept);
+app.post('/signup', mid.checkMultipleSignUp, db.challenge.accept);
 app.post('/createChallenge', db.challenge.create);
 app.post('/:challengeId/updateChallenge', db.challenge.update);
+app.get('/:challengeId/delete', db.challenge.delete);
 
 
 //https://github.com/reactjs/react-router-tutorial/tree/master/lessons/13-server-rendering
-app.get('*', function(req, res) {
+app.get('/splash', function(req, res) {
   res.sendFile(path.join(__dirname, '/../client/public/splash.html'));
+});
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/../client/public/index.html'));
+
 });
 
 app.listen(port, function() {
   console.log('Listening on port', port);
 });
-
-function protectApi(req, res, next) {
-  if (req.query.origin) {
-    console.log('works - youre throught to getting all users');
-    next();
-  } else {
-    console.log('you broke');
-    res.redirect('/');
-  }
-}
