@@ -9,7 +9,8 @@ export default class EditForm extends React.Component{
       name: challenge.name,
       description: challenge.description,
       type: challenge.type,
-      url: challenge.url
+      url: challenge.url,
+      reward: challenge.reward || ''
     }
     this.id = this.props.params.challengeId;
   }
@@ -35,7 +36,8 @@ export default class EditForm extends React.Component{
       name: this.state.name,
       description: this.state.description,
       type: this.state.type,
-      url: this.state.url
+      url: this.state.url,
+      reward: this.state.reward
     };
     console.log(newChallenge);
     this.props.updateChallenge(newChallenge, this.id);
@@ -87,6 +89,16 @@ export default class EditForm extends React.Component{
             })}
           </SelectField>
           <br />
+
+          <TextField
+            value={this.state.reward}
+            floatingLabelText="Challenge Reward"
+            name="reward"
+            floatingLabelFixed={true}
+            onChange={this.handleFormChanges.bind(this)}
+          />
+          <br />
+
           <TextField
             value={this.state.url}
             name="url"

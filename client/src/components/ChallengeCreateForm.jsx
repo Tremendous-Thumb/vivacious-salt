@@ -12,7 +12,8 @@ class ChallengeCreateForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: ''
+      category: '',
+      reward: ''
     };
     this.categories = [
       { value: 'online', label: 'Online' },
@@ -25,12 +26,14 @@ class ChallengeCreateForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCategory = this.handleCategory.bind(this);
   }
+
   componentWillMount() {
     //check if user is logged
     if(!this.props.currentUser) {
       this.context.router.push('/');
     }
   }
+
   handleCategory(event, index, value) {
     // using materialUI
     console.log(value);
@@ -38,16 +41,20 @@ class ChallengeCreateForm extends React.Component {
       category: value
     });
   }
-
+  handleFormChanges(e) {
+    this.setState({
+      [e.target.name] = e.target.value
+    })
+  }
   handleSubmit(e) {
     e.preventDefault();
-
     var newChallenge = {
       userId: this.props.currentUser.id,
       name: this.refs.name.value,
       description: this.refs.description.value,
       type: this.state.category,
-      url: this.refs.image.value
+      url: this.refs.image.value,
+      reward: this.state.reward
       // image: this.refs.image.value
     };
 
@@ -97,6 +104,14 @@ class ChallengeCreateForm extends React.Component {
           </SelectField>
         </div>
 
+        <TextField
+          value={this.state.reward}
+          floatingLabelText="Challenge Reward"
+          name="reward"
+          floatingLabelFixed={true}
+          onChange={this.handleFormChanges.bind(this)}
+        />
+        <br />
         <div className="input-field">
           <input
             className="validate"

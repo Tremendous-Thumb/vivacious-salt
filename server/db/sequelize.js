@@ -39,6 +39,7 @@ const Challenge = sequelize.define('challenge', {
   challengers: Sequelize.INTEGER,
   successes: Sequelize.INTEGER,
   endTime: Sequelize.DATE,
+  reward: Sequelize.INTEGER,
 });
 
 // Users_challenge model
