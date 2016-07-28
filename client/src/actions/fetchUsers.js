@@ -7,6 +7,7 @@ export function receiveUsers(users) {
   };
 }
 
+<<<<<<< 1c5b1d51e2e088dd1f914cd8dc5ae1988cf5ce45
 // export function loading() {
 //   return {
 //     type: 'LOADING',
@@ -28,6 +29,7 @@ export function receiveUsers(users) {
 export function fetchUsers(challengeId, userType) {
   return function(dispatch) {
     // dispatch(loading());
+
     return fetch('http://localhost:3000/users?origin=true')
       .then(res => {
         if (!res.ok) {
