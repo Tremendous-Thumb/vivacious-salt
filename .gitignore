@@ -11,6 +11,7 @@ npm-debug.log
 client/public/dist
 client/public/bundle.js
 server/server.bundle.js
+client/public/vendor/
 
 # Config file
 server/config/config.js
