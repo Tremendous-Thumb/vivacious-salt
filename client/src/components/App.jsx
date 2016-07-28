@@ -21,7 +21,6 @@ class App extends React.Component {
           console.log('response not ok');
           throw Error(res.statusText);
         }
-        console.log('in fetch');
         return res.json();
        })
       .then(json => {
