@@ -101,3 +101,7 @@ img {
 .pendingApproval {
   border: 2px solid black;
 }
+
+.hidden {
+  display: none;
+}

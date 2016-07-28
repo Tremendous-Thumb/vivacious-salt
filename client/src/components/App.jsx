@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import Spinner from './Spinner.jsx';
 injectTapEventPlugin();
 
 class App extends React.Component {
@@ -18,7 +19,7 @@ class App extends React.Component {
         if (!res.ok) {
           throw Error(res.statusText);
         }
-        return res.json();   
+        return res.json();
        })
       .then(json => this.props.loginUser(json))
       .catch(err => console.log('ERROR GETTING USEA', err));
@@ -27,15 +28,15 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <Navigation />    
+        <Navigation />
 
-          {/*Passes this redux state to first children*/}
         {React.cloneElement(this.props.children, this.props)}
       </div>
     );
   }
 }
-
+/* <Spinner hidden={this.props.loading}/> */
+//
 //Attach store and app actions to App
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -44,6 +45,7 @@ import * as appActions from './../actions/appActions.js';
 function mapStateToProps(state) {
   return {
     entities: state.entities,
+    loading: state.loading,
     currentChallenge: state.currentChallenge,
     challengeList: state.challengeList,
     currentUser: state.currentUser,
