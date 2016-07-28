@@ -50,7 +50,7 @@ app.get('/userInfo', db.user.get);
 app.post('/signup', mid.checkMultipleSignUp, db.challenge.accept);
 app.post('/createChallenge', db.challenge.create);
 app.post('/:challengeId/updateChallenge', db.challenge.update);
-app.get('/delete/:challengeId', db.challenge.delete);
+app.get('/:challengeId/delete', db.challenge.delete);
 
 
 //https://github.com/reactjs/react-router-tutorial/tree/master/lessons/13-server-rendering

@@ -1,5 +1,6 @@
 const model = require('../sequelize.js');
 const deleteChallenge = require('./deleteChallenge.js');
+const updateChallenge = require('./updateChallenge.js');
 const Promise = require('bluebird');
 
 module.exports = {
@@ -195,9 +196,9 @@ module.exports = {
       });
         // res.send('Challenge created')
     },
-    update: (req, res) => {
-      console.log('heard ya with', req.params.id, 'and', req.body);
-    },
+
+    update: updateChallenge,
+
     accept: (req, res) => {
       // grabs the userid of the user who accepted the challenge
       var facebookSession = req.sessionStore.sessions;
@@ -236,7 +237,7 @@ module.exports = {
           });
       });
     },
-    
+
     delete: deleteChallenge,
 
     // this will approve the userChallenge in the proof table

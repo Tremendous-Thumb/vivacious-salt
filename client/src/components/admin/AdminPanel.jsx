@@ -56,7 +56,7 @@ class AdminPanel extends React.Component {
           <br />
           <div>Start: {moment(challenge.createdAt).format("MM/DD/YY")} </div>
           <div>End: {moment(challenge.endTime).format("MM/DD/YY")} </div>
-          <a href={'/delete/' + id}><RaisedButton label="Delete this challenge" backgroundColor="#e22114"/></a>
+          <a href={'/' + id + '/delete'}><RaisedButton label="Delete this challenge" backgroundColor="#e22114"/></a>
           <PendingApprovalList players={this.props.playersOfUserChallenges[id]} handleClick={this.props.adminClick.bind(null, id)} entities={this.props.entities} />
         </CardText>
       </Card>

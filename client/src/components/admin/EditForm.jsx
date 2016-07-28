@@ -3,20 +3,39 @@ import React from 'react';
 export default class EditForm extends React.Component{
   constructor(props) {
     super(props);
+    const id = this.props.params.challengeId;
+    const challenge = this.props.entities.challenges[id];
     this.state = {
-      type: ''
+      name: challenge.name,
+      description: challenge.description,
+      type: challenge.type,
+      url: challenge.url
     }
     this.id = this.props.params.challengeId;
+  }
+  handleFormChanges(e) {
+    console.log(e);
+    console.log(e.target.name);
+    console.log(e.target.value);
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  handleCategoryChange(e, i, val) {
+    this.setState({
+      type: val
+    })
   }
 
   handleSubmit(e) {
     e.preventDefault();
     var newChallenge = {
       userId: this.props.currentUser.id,
-      name: this.refs.name.value,
-      description: this.refs.description.value,
-      type: this.state.category,
-      url: this.refs.url.value
+      name: this.state.name,
+      description: this.state.description,
+      type: this.state.type,
+      url: this.state.url
     };
     console.log(newChallenge);
     this.props.updateChallenge(newChallenge, this.id);
@@ -41,39 +60,39 @@ export default class EditForm extends React.Component{
           className="col s10 offset-s1" >
           <p className="center-align"> Edit your challenge below: </p>
           <TextField
-            hintText={challenge.name}
+            value={this.state.name}
             floatingLabelText="Challenge Name"
-            ref="name"
+            name="name"
             floatingLabelFixed={true}
+            onChange={this.handleFormChanges.bind(this)}
           />
           <br />
           <TextField
-            hintText={challenge.description}
+            value={this.state.description}
+            name="description"
             floatingLabelText="Challenge Description"
-            multiLine={true}
-            ref="description"
-            rows={2}
             floatingLabelFixed={true}
-          /><br />
-
-          <div className="input-field">
-            <SelectField
-              hintText={challenge.category}
-              floatingLabelText="Challenge Category"
-              ref="category"
-              onChange={this.props.handleCategory} >
-              {categories.map((category, i) => {
-                return (
-                  <MenuItem key={i} value={category.value} primaryText={category.label} />
-                );
-              })}
-            </SelectField>
-          </div>
+            onChange={this.handleFormChanges.bind(this)}
+          />
+          <br />
+          <SelectField
+            floatingLabelText="Challenge Category"
+            value={this.state.type}
+            onChange={this.handleCategoryChange.bind(this)}
+            name="type" >
+            {categories.map((category, i) => {
+              return (
+                <MenuItem key={i} value={category.value} primaryText={category.label} />
+              );
+            })}
+          </SelectField>
+          <br />
           <TextField
-            hintText={challenge.url}
+            value={this.state.url}
+            name="url"
             floatingLabelText="Challenge Image"
             floatingLabelFixed={true}
-            ref="url"
+            onChange={this.handleFormChanges.bind(this)}
           />
           <br />
           <div className="center-align">
