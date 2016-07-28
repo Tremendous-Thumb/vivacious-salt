@@ -15,15 +15,17 @@ class App extends React.Component {
 
     // console.log('challenge list', this.props.challengeList.items);
     //Get current user on load
-    fetch('/user')
+    fetch('/user?origin=true')
       .then(res => {
         if (!res.ok) {
           console.log('response not ok');
           throw Error(res.statusText);
         }
+        console.log('in fetch');
         return res.json();
        })
       .then(json => {
+        console.log('json back', json);
         this.props.loginUser(json);
       })
       .catch(err => console.log('ERROR GETTING USEA', err));
