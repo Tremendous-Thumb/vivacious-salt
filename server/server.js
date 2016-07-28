@@ -6,7 +6,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const passportFacebook = require('./passport.js');
 const session = require('express-session');
 const db = require('./db/controller/index.js');
-
+const videoUrl = require('./aws.js');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,10 +24,9 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.get('/presign', videoUrl.generateUrl);
 // routes for facebook authentication and return path after authentication
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/'}),
@@ -41,7 +40,7 @@ app.get('/user', db.user.get);
 app.get('/challenges', db.challenge.getAll);
 app.get('/users', db.user.getAll);
 app.get('/userInfo', db.user.get);
-app.post('/signup', db.challenge.accept);
+app.post('/signu.', db.challenge.accept);
 app.post('/createChallenge', db.challenge.create);
 
 //https://github.com/reactjs/react-router-tutorial/tree/master/lessons/13-server-rendering
