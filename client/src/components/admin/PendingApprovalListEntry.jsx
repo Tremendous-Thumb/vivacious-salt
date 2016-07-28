@@ -11,7 +11,7 @@ const nameStyle = {
   fontWeight: 'bold'
 }
 
-const PendingApprovalListEntry = ({player, handleClick, entities }) => {
+const PendingApprovalListEntry = ({player, handleClick, entities, challengeId }) => {
   // grab user info from entities using player id
   const data = entities.users[player.id];
   // player.attemptVisible = true;
@@ -28,18 +28,7 @@ const PendingApprovalListEntry = ({player, handleClick, entities }) => {
           if(player.attemptVisible && data.attempt){
             return (
               <div>
-                <div className="col s3">
-                  <RaisedButton
-                    label="Accept"
-                    backgroundColor="#31a81d"
-                    onClick={handleClick}/>
-                </div>
-                <div className="col s3">
-                  <RaisedButton
-                    label="Reject"
-                    backgroundColor="#bf302b"
-                    onClick={handleClick}/>
-                </div>
+                <Link to={"/" + challengeId + "/submissionReview"}>View Submission</Link>
               </div>
             );
 

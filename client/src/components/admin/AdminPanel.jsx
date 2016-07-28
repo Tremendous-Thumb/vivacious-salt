@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField'
 import EditForm from './EditForm.jsx';
 import moment from 'moment';
+import $ from 'jquery';
 
 class AdminPanel extends React.Component {
   constructor(props) {
@@ -22,6 +23,8 @@ class AdminPanel extends React.Component {
     if (!this.props.currentUser) {
       this.context.router.push('/');
     }
+
+    '/:challengeId/admin/getChallengers'
   }
 
   deleteChallengeClick(e) {
@@ -36,12 +39,12 @@ class AdminPanel extends React.Component {
     console.log('id', id);
     // get challeng info from entities
     const challenge = this.props.entities.challenges[id];
-
+    console.log('players on this card', this.props.playersOfUserChallenges[id])
     console.log('now rendering', challenge);
     return (
       <Card className="admin-card">
         <CardHeader
-          title={challenge.name + '- ADMIN PANEL'}
+          title="ADMIN PANEL"
           subtitle=""
           avatar="user-profile-image"
         />
@@ -57,7 +60,7 @@ class AdminPanel extends React.Component {
           <div>Start: {moment(challenge.createdAt).format("MM/DD/YY")} </div>
           <div>End: {moment(challenge.endTime).format("MM/DD/YY")} </div>
           <a href={'/' + id + '/delete'}><RaisedButton label="Delete this challenge" backgroundColor="#e22114"/></a>
-          <PendingApprovalList players={this.props.playersOfUserChallenges[id]} handleClick={this.props.adminClick.bind(null, id)} entities={this.props.entities} />
+          <PendingApprovalList challengeId={id} players={this.props.playersOfUserChallenges[id]} handleClick={this.props.adminClick.bind(null, id)} entities={this.props.entities} />
         </CardText>
       </Card>
     );

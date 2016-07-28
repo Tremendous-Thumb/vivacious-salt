@@ -224,11 +224,14 @@ module.exports = {
     admin: (req, res) => {
       let adminChallenge;
       // finds current challenge
-      model.Challenge.find({ where: req.body.challengeId })
+      model.Challenge.find({ where: {
+        id:req.params.challengeId
+      }
+    })
       .then((challenge) => {
         adminChallenge = challenge.dataValues;
         // finds list of users who have accepted challenge
-        model.Users_challenge.findAll({ where: { challengeId: req.body.challengeId } })
+        model.Users_challenge.findAll({ where: { challengeId: req.params.challengeId } })
         .then((usersChallenges) => {
           const usersArray = usersChallenges.map(userChallenge =>
             model.User.find({ where: userChallenge.dataValues.userId })
