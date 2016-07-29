@@ -224,8 +224,9 @@ module.exports = {
     admin: (req, res) => {
       let adminChallenge;
       // finds current challenge
+      console.log('!!!!!!!!admin request!!!!!');
       model.Challenge.find({ where: {
-        id:req.params.challengeId
+        id: req.params.challengeId
       }
     })
       .then((challenge) => {
