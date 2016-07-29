@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "npm run build",
     "start": "node server/server.js",
-    "dev:hot": "nodemon server/server.js & webpack --watch",
+    "dev:hot": "nodemon server/server.js & webpack --watch & open -a \"Google Chrome\" http://localhost:3000",
     "dev": "webpack-dev-server --content-base client/public",
     "build:client": "node_modules/.bin/webpack",
     "build": "npm run build:client",

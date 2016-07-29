@@ -4,11 +4,15 @@ import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'm
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import TextField from 'material-ui/TextField'
+import TextField from 'material-ui/TextField';
 import EditForm from './EditForm.jsx';
 import moment from 'moment';
 import axios from 'axios';
-
+const imageStyle = {
+  width: '100%',
+  height: '400px',
+  overflow: 'hidden'
+}
 class AdminPanel extends React.Component {
   constructor(props) {
     console.log('creating admin panel');
@@ -67,8 +71,8 @@ class AdminPanel extends React.Component {
           subtitle=""
           avatar="user-profile-image"
         />
-        <CardMedia className="admin-image">
-          <img className="admin-image" src={challenge.url} />
+        <CardMedia style={imageStyle}>
+          <img style={{ height: '400px', objectFit: 'contain' }} src={challenge.url} />
         </CardMedia>
         <CardTitle title={challenge.name} subtitle={challenge.category} />
         <CardText>

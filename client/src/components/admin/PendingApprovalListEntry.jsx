@@ -1,5 +1,6 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Link} from 'react-router';
 
 const pStyle = {
   margin: 0
@@ -14,9 +15,9 @@ const nameStyle = {
 const PendingApprovalListEntry = ({player, handleClick, entities, challengeId }) => {
   // grab user info from entities using player id
   const data = entities.users[player.id];
-  // player.attemptVisible = true;
+  player.attemptVisible = true;
   console.log('i have a player', player);
-  // data.attempt = true;
+  data.attempt = true;
   return (
     <div className="pendingApproval">
       {/* click will toggle attemptVisible prop of player */}
@@ -29,7 +30,7 @@ const PendingApprovalListEntry = ({player, handleClick, entities, challengeId })
           if(player.attemptVisible && data.attempt){
             return (
               <div>
-                <Link to={"/" + challengeId + "/submissionReview"}>View Submission</Link>
+                <Link to={"/challenges/" + challengeId + "/submissionReview"}>View Submission</Link>
               </div>
             );
 
