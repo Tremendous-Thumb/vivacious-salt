@@ -10,10 +10,7 @@ let generateUrl = (req, res) => {
 
   const params = {
     Bucket: process.env.bucket,
-    Key: 'ruwefhewfe',
-    Expires: 600,
-    ContentType: 'video/webm',
-    ACL: 'public-read'
+    Key: 'blobob'
   };
 
  //  s3.upload(parms, function(err, data) {
