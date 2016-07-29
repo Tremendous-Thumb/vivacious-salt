@@ -3,6 +3,7 @@ import {PropTypes} from 'react';
 import { Card, CardActions, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
+import {GridList, GridTile} from 'material-ui/GridList';
 
 const buttonStyle = {
   margin: 12,
@@ -70,6 +71,11 @@ class ChallengeListEntry extends React.Component {
     // don't go straight to admin view. Admins may want to see what it looks like to challengers. Give admins an optional button
     // to see the admin version
     this.context.router.push(`/challenges/${id}`);
+  }
+
+  handleView(e) {
+    e.preventDefault();
+
   }
 
   render() {

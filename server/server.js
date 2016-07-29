@@ -7,6 +7,7 @@ const passportFacebook = require('./passport.js');
 const session = require('express-session');
 const db = require('./db/controller/index.js');
 const videoUrl = require('./aws.js');
+const sendUrl = require('./aws.js');
 const model = require('./db/sequelize.js');
 const mid = require('./middleware.js');
 
@@ -29,6 +30,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.get('/presign', videoUrl.generateUrl);
+// app.post('/presign', sendUrl.createVideoDb);
 // routes for facebook authentication and return path after authentication
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/'}),

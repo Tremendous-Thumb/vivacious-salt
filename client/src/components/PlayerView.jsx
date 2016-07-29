@@ -78,7 +78,7 @@ class PlayerView extends React.Component {
           <RaisedButton label="Sign Up!" backgroundColor="#fdd835" style={buttonStyle} onTouchTap={this.handleSignUp}/>
           {(() => {
             console.log(this.props);
-            if(challenge.userId === this.props.currentUser.id){
+            if (challenge.userId === this.props.currentUser.id){
               return <Link to={"/challenges/" + id + "/admin"}><RaisedButton label="Admin Panel" backgroundColor="#fdd835"/></Link>
             }
           })()}
