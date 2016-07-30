@@ -44,8 +44,10 @@ class ChallengeListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.handleSignUp = this.handleSignUp.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
-    this.handelCancel = this.handleCancel.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
+
   }
 
 
@@ -68,6 +70,12 @@ class ChallengeListEntry extends React.Component {
     this.context.router.push(`/challenges/${id}`);
   }
 
+  handleComplete() {
+    const id = this.props.challenge.id;
+    // this.props.challenge.currentChallengers.forEach(playerId => { this.props.addPlayer(id, playerId); });
+    const loc = this.props.challenge.userId === this.props.currentUser.id ? `/challenges/` : `/challenges/${id}/submission`;
+    this.context.router.push(loc);
+  }
 
   handleCancel(e) {
     const id = this.props.challenge.id;
@@ -95,7 +103,7 @@ class ChallengeListEntry extends React.Component {
 
     return (
       <Card style={cardStyle} >
-        <CardMedia style={imageStyle} onClick={this.handleClick.bind(this)}>
+        <CardMedia style={imageStyle} onClick={this.handleClick}>
           <img style={{ height: '200px', objectFit: 'contain' }} src={this.props.challenge.url} />
         </CardMedia>
         <CardTitle style={titleStyle} title={this.props.challenge.name} subtitle={this.props.challenge.category} />
@@ -108,11 +116,17 @@ class ChallengeListEntry extends React.Component {
         </CardText>
         <CardActions>
           {signUpOrCancel}
+          <RaisedButton label="Complete" style={buttonStyle} backgroundColor="#61CBFF" onTouchTap={this.handleComplete} />
         </CardActions>
       </Card>
     );
   }
 }
+
+
+ChallengeListEntry.propTypes = {
+  challenge: React.PropTypes.object.isRequired
+};
 
 ChallengeListEntry.contextTypes = {
   router: React.PropTypes.object.isRequired
