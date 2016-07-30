@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "NewChallenger",
   "main": "index.js",
+  "engines": {
+   "node": "6.2.2"
+  },
   "scripts": {
-    "postinstall": "npm run build",
+    "postinstall": "npm run build; gulp copy",
     "start": "node server/server.js",
     "dev:hot": "nodemon server/server.js & webpack --watch & open -a \"Google Chrome\" http://localhost:3000",
     "dev": "webpack-dev-server --content-base client/public",
@@ -34,10 +37,7 @@
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "eslint-plugin-react": "^5.2.2",
     "font-awesome": "^4.6.3",
-    "gulp": "^3.9.1",
-    "gulp-less": "^3.1.0",
     "jquery": "^3.1.0",
-    "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
@@ -61,6 +61,8 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-dropzone": "^3.5.3",
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.1.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.5.2",
     "react-router-redux": "^4.0.5",
@@ -68,6 +70,7 @@
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
     "sequelize": "^3.23.6",
+    "webpack": "^1.13.1",
     "whatwg-fetch": "^1.0.0"
   }
 }
