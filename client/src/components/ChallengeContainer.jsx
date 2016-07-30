@@ -26,7 +26,7 @@ class ChallengeContainer extends React.Component {
       <div>
         {this.props.children && React.cloneElement(self.props.children, passedProps)};
       </div>
-    )
+    );
   }
 }
 

@@ -1,6 +1,8 @@
 const model = require('../sequelize.js');
 const deleteChallenge = require('./deleteChallenge.js');
 const updateChallenge = require('./updateChallenge.js');
+const acceptSubmission = require('./acceptSubmission.js');
+const getSubmissionData = require('./getSubmissionData.js')
 const Promise = require('bluebird');
 const detailHelper = require('../helpers.js').detailHelper;
 
@@ -158,9 +160,9 @@ module.exports = {
       });
         // res.send('Challenge created')
     },
-
+    getSubmissionData: getSubmissionData,
     update: updateChallenge,
-
+    acceptSubmission: acceptSubmission,
     accept: (req, res) => {
       // grabs the userid of the user who accepted the challenge
       var facebookSession = req.sessionStore.sessions;
@@ -191,6 +193,7 @@ module.exports = {
               model.Proof.create({
                 usersChallengeId: usersChallenge.dataValues.id,
                 creatorAccepted: false,
+                media: ''
               })
               .then((proof) => {
                 res.json({'accepted': 'true'});
@@ -224,11 +227,15 @@ module.exports = {
     admin: (req, res) => {
       let adminChallenge;
       // finds current challenge
-      model.Challenge.find({ where: req.body.challengeId })
+      console.log('!!!!!!!!admin request!!!!!');
+      model.Challenge.find({ where: {
+        id: req.params.challengeId
+      }
+    })
       .then((challenge) => {
         adminChallenge = challenge.dataValues;
         // finds list of users who have accepted challenge
-        model.Users_challenge.findAll({ where: { challengeId: req.body.challengeId } })
+        model.Users_challenge.findAll({ where: { challengeId: req.params.challengeId } })
         .then((usersChallenges) => {
           const usersArray = usersChallenges.map(userChallenge =>
             model.User.find({ where: userChallenge.dataValues.userId })
