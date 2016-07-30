@@ -6,7 +6,6 @@ export function receiveUsers(users) {
     }
   };
 }
-
 // export function loading() {
 //   return {
 //     type: 'LOADING',

@@ -57,6 +57,7 @@ app.get('/:challengeId/admin/getChallengers', db.challenge.admin);
 app.get('/:challengeId/admin/acceptSubmission', db.challenge.acceptSubmission);
 app.get('/:challengeId/admin/viewSubmission', db.challenge.getSubmissionData);
 app.post('/signup', mid.checkMultipleSignUp, db.challenge.accept);
+app.post('/cancel', db.challenge.cancel);
 app.post('/createChallenge', db.challenge.create);
 app.post('/:challengeId/updateChallenge', db.challenge.update);
 app.get('/:challengeId/delete', db.challenge.delete);

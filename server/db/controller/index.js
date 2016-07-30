@@ -203,6 +203,48 @@ module.exports = {
       });
     },
 
+    cancel: (req, res) => {
+      // grabs the ID of whoever cancels the challenge
+      var facebookSession = req.sessionStore.sessions;
+      var FaceId;
+      for (var key in facebookSession) {
+        var fid = JSON.parse(facebookSession[key])
+        if (fid.passport) {
+          faceId = fid.passport.user.id;
+        }
+      }
+      // get the user's information
+      model.User.find({ where: {facebookId: faceId }})
+      .then((user) => {
+        // get the challenge ID from the selected challenge
+        model.Challenge.find( {where: {id: req.body.challengeId }})
+        .then((challenge) => {
+          // get the user_challenge to find proof
+          model.Users_challenge.find({ where: {
+            userId: user.dataValues.id,
+            challengeId: challenge.dataValues.id
+          }})
+          .then((usersChallenge) => {
+            //remove the proof row for the user/challenge
+            model.Proof.destroy({ where: {
+              usersChallengeId: usersChallenge.dataValues.id
+            }});
+            // decrement the count of challengers
+            challenge.decrement(['challengers']);
+            // remove it's listing from the join table
+            model.Users_challenge.destroy({ where: {
+              userId: user.dataValues.id,
+              challengeId: challenge.dataValues.id
+            }})
+            .then((something) => {
+              res.json(something);
+            });
+          })
+        });
+      })
+
+    },
+
     delete: deleteChallenge,
 
     // this will approve the userChallenge in the proof table
