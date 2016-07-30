@@ -24,6 +24,10 @@ const User = sequelize.define('user', {
   email: Sequelize.STRING(100),
   url: Sequelize.TEXT,
   facebookId: Sequelize.TEXT,
+  points: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  }
 });
 
 // Type model

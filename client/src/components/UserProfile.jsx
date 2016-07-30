@@ -16,6 +16,7 @@ const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChalle
         <span>
           <div>{currentUser.username}</div>
           <div>{currentUser.email}</div>
+          <div>Points: {currentUser.points}</div>
         </span>
       </div>
       <div className="row card">
