@@ -1,6 +1,8 @@
 var AWS = require('aws-sdk');
 require('dotenv').config();
 //
+const shortid = require('shortid');
+
 AWS.config.update({accessKeyId: process.env.accessKeyId, secretAccessKey: process.env.secretAccessKey});
 AWS.config.update({region: 'us-west-2'});
 
@@ -12,8 +14,8 @@ let generateUrl = (req, res) => {
 
   const params = {
     Bucket: process.env.bucket,
-    Key: 'vid.MOV',
-    ContentType: 'video/quicktime',
+    Key: shortid.generate(),
+    ContentType: 'application/octet-stream',
     ACL: 'public-read'
   };
 
@@ -54,12 +56,20 @@ let createVideoDb = (req, res) => {
         })
         // creates an entry in proof table for creator of challenge to approve
         .then((usersChallenge) => {
-          console.log('am i getting here');
+          console.log('am i getting here', usersChallenge.dataValues.id);
           db.Proof.update({
             media: req.body.publicUrl
-          }, {where: {creatorAccepted: true }});
+          }, {where: {usersChallengeId: usersChallenge.dataValues.id }});
+        })
+        .then((challenge) => {
+          console.log('whats this', challenge);
         });
       });
+  });
+
+  db.Users_challenge.findOne({
+    media: req.body.publicUrl
+    // console.log('found url');
   });
 
 };

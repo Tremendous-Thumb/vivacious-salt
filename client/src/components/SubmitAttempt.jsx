@@ -5,7 +5,6 @@ import {connect} from 'react-redux'
 
 
 
-
 let getUrl = () => {
   return fetch('/presign')
     .then((response) => {
@@ -27,7 +26,7 @@ let postVideoS3 = (data) => {
       type: 'PUT',
       url: data.preSignedUrl,
       processData: false,
-      contentType: 'video/quicktime',
+      contentType: 'application/octet-stream',
       data: data.file,
       success: function() {
         resolve(data);
@@ -125,7 +124,10 @@ class SubmitAttempt extends React.Component {
         <button type="button" onClick={this.onSubmit.bind(this)} >
           Submit Video
         </button>
-
+        {this.state.files.length > 0 ? <div>
+        <h2>Uploading {this.state.files.length} files...</h2>
+        <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
+        </div> : null}
       </div>
     );
   }
