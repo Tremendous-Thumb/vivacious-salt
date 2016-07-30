@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation.jsx';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import Spinner from './Spinner.jsx';
 injectTapEventPlugin();
 
 class App extends React.Component {
@@ -13,15 +14,17 @@ class App extends React.Component {
     this.props.fetchUsers();
 
     //Get current user on load
-    fetch('/user')
+    fetch('/user?origin=true')
       .then(res => {
         if (!res.ok) {
           console.log('response not ok');
           throw Error(res.statusText);
         }
+        console.log('in fetch');
         return res.json();
        })
       .then(json => {
+        console.log('json back', json);
         this.props.loginUser(json);
       })
       .catch(err => console.log('ERROR GETTING USEA', err));
@@ -46,6 +49,7 @@ import * as appActions from './../actions/appActions.js';
 function mapStateToProps(state) {
   return {
     entities: state.entities,
+    loading: state.loading,
     currentChallenge: state.currentChallenge,
     challengeList: state.challengeList,
     currentUser: state.currentUser,
