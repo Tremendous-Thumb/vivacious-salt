@@ -11,6 +11,7 @@ const UserProfile = ({challenges, currentUser, entities, addPlayer, signUpChalle
 
 
 
+
   return (
     <div>
       <div className="card">

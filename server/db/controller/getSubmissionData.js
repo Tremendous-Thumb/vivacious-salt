@@ -1,7 +1,7 @@
 const model = require('../sequelize.js');
 const Promise = require('bluebird');
 
-module.exports = function getSubmissionData() {
+module.exports = function getSubmissionData(req, res) {
   var facebookSession = req.sessionStore.sessions;
   var faceId;
   for (var key in facebookSession) {

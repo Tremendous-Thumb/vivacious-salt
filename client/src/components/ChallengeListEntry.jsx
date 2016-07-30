@@ -45,8 +45,11 @@ class ChallengeListEntry extends React.Component {
     super(props);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handelCancel = this.handleCancel.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
+
   }
+
 
 
   handleSignUp() {
@@ -67,6 +70,12 @@ class ChallengeListEntry extends React.Component {
     this.context.router.push(`/challenges/${id}`);
   }
 
+  handleComplete() {
+    const id = this.props.challenge.id;
+    // this.props.challenge.currentChallengers.forEach(playerId => { this.props.addPlayer(id, playerId); });
+    const loc = this.props.challenge.userId === this.props.currentUser.id ? `/challenges/` : `/challenges/${id}/submission`;
+    this.context.router.push(loc);
+  }
 
   handleCancel(e) {
     const id = this.props.challenge.id;
@@ -107,10 +116,20 @@ class ChallengeListEntry extends React.Component {
         </CardText>
         <CardActions>
           {signUpOrCancel}
+          <RaisedButton label="Complete" style={buttonStyle} backgroundColor="#61CBFF" onTouchTap={this.handleComplete} />
         </CardActions>
       </Card>
     );
   }
 }
+
+
+ChallengeListEntry.propTypes = {
+  challenge: React.PropTypes.object.isRequired
+};
+
+ChallengeListEntry.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default ChallengeListEntry;

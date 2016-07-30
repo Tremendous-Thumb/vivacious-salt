@@ -17,7 +17,7 @@ const PendingApprovalListEntry = ({player, handleClick, entities, challengeId })
   const data = entities.users[player.id];
   player.attemptVisible = true;
   console.log('i have a player', player);
-  data.attempt = true;
+  // data.attempt = true;
   return (
     <div className="pendingApproval">
       {/* click will toggle attemptVisible prop of player */}
@@ -27,10 +27,10 @@ const PendingApprovalListEntry = ({player, handleClick, entities, challengeId })
         </div>
         {/* check if we should render player's submission */}
         {(() => {
-          if(player.attemptVisible && data.attempt){
+          if(player.attemptVisible){
             return (
               <div>
-                <Link to={"/challenges/" + challengeId + "/submissionReview"}>View Submission</Link>
+                <Link to={"/challenges/" + challengeId + "/" + player.id + "/submissionReview"}>View Submission</Link>
               </div>
             );
 

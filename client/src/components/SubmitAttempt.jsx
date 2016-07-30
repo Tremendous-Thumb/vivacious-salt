@@ -1,8 +1,6 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
 
-
-
 let getUrl = () => {
   return fetch('/presign')
     .then((response) => {
@@ -59,9 +57,6 @@ let postValidUrlS3 = (data) => {
 };
 
 
-
-
-
 class SubmitAttempt extends React.Component {
   constructor(props) {
     super(props);
@@ -108,9 +103,6 @@ class SubmitAttempt extends React.Component {
 
   }
 
-
-
-
   render() {
     return (
       <div>
@@ -119,7 +111,7 @@ class SubmitAttempt extends React.Component {
         </Dropzone>
         <div>
           <button onClick={this.onOpenClick.bind(this)}> Attach File </button>
-          <button onClick={this.submit.bind(this)}>Submit Proof</button>
+          <button onClick={this.onSubmit.bind(this)}>Submit Proof</button>
         </div>
         {this.state.files.length > 0 ? <div>
           <h2>Uploading {this.state.files.length} files...</h2>

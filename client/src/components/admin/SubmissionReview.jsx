@@ -37,13 +37,16 @@ export default class SubmissionReview extends React.Component {
   handleClick(e){
     e.preventDefault();
     const id = this.props.params.challengeId;
+    const pid = this.props.params.playerId;
     if (e.currentTarget.value === "Accept"){
       console.log('submission accepted');
       this.setState({
         acceptedSubmission: true
       });
 
-      axios.post('/' + id + '/admin/acceptSubmission')
+      axios.post('/' + id + '/admin/acceptSubmission', {
+        userId: pid
+      })
       .then((response) => {
         console.log(response);
       });
