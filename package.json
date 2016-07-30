@@ -4,7 +4,7 @@
   "description": "NewChallenger",
   "main": "index.js",
   "engines": {
-   "node": "6.2.2"
+    "node": "6.2.2"
   },
   "scripts": {
     "postinstall": "npm run build; gulp copy",
@@ -50,6 +50,8 @@
     "es6-promise": "^3.2.1",
     "express": "^4.14.0",
     "express-session": "^1.14.0",
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.1.0",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.1.0",
     "lodash": "^4.13.1",
@@ -61,10 +63,8 @@
     "pg-hstore": "^2.3.2",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
-    "react-dropzone-component": "^1.0.4",
     "react-dropzone": "^3.5.3",
-    "gulp": "^3.9.1",
-    "gulp-less": "^3.1.0",
+    "react-dropzone-component": "^1.0.4",
     "react-redux": "^4.4.5",
     "react-router": "^2.5.2",
     "react-router-redux": "^4.0.5",

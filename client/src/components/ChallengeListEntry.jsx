@@ -44,9 +44,10 @@ class ChallengeListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.handleSignUp = this.handleSignUp.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
     this.handelCancel = this.handleCancel.bind(this);
   }
+
 
 
   handleSignUp() {
@@ -94,7 +95,7 @@ class ChallengeListEntry extends React.Component {
 
     return (
       <Card style={cardStyle} >
-        <CardMedia style={imageStyle} onClick={this.handleClick}>
+        <CardMedia style={imageStyle} onClick={this.handleClick.bind(this)}>
           <img style={{ height: '200px', objectFit: 'contain' }} src={this.props.challenge.url} />
         </CardMedia>
         <CardTitle style={titleStyle} title={this.props.challenge.name} subtitle={this.props.challenge.category} />
@@ -112,5 +113,9 @@ class ChallengeListEntry extends React.Component {
     );
   }
 }
+
+ChallengeListEntry.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default ChallengeListEntry;
