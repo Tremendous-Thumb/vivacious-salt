@@ -6,6 +6,8 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const passportFacebook = require('./passport.js');
 const session = require('express-session');
 const db = require('./db/controller/index.js');
+const videoUrl = require('./aws.js');
+const sendUrl = require('./aws.js');
 const model = require('./db/sequelize.js');
 const mid = require('./middleware.js');
 const app = express();
@@ -26,10 +28,10 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.get('/presign', videoUrl.generateUrl);
+app.post('/presign', sendUrl.createVideoDb);
 // routes for facebook authentication and return path after authentication
 app.get('/auth/facebook', passport.authenticate('facebook',
   {
@@ -53,6 +55,7 @@ app.get('/user', db.user.get);
 app.get('/challenges', mid.protectApi, db.challenge.getAll);
 app.get('/users', mid.protectApi, db.user.getAll);
 app.get('/userInfo', db.user.get);
+
 app.get('/:challengeId/admin/getChallengers', db.challenge.admin);
 app.post('/:challengeId/admin/acceptSubmission', db.challenge.acceptSubmission);
 app.get('/:challengeId/admin/viewSubmission', db.challenge.getSubmissionData);

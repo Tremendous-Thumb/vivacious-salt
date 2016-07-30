@@ -18,6 +18,6 @@ const Navigation = ({challenges, currentUser, entities, addPlayer, signUpChallen
       {toProfile}
     </nav>
   );
-}
+};
 
 export default Navigation;

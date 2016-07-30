@@ -20,6 +20,6 @@ const Main = ({ challengeList, entities, currentUser, addPlayer, history, signUp
     </div>
     <ChallengeList challenges={challengeList.items} entities={entities} currentUser={currentUser} addPlayer={addPlayer} signUpChallenge={signUpChallenge} cancelChallenge={cancelChallenge} history={history} />
   </div>
-);}
-
+  );
+};
 export default Main;

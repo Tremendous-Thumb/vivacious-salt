@@ -13,7 +13,6 @@ class App extends React.Component {
     this.props.fetchChallenges();
     this.props.fetchUsers();
 
-    // console.log('challenge list', this.props.challengeList.items);
     //Get current user on load
     fetch('/user?origin=true')
       .then(res => {
@@ -34,14 +33,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
+
         <Navigation challenges={this.props.challengeList.items} entities={this.props.entities} currentUser={this.props.currentUser} addPlayer={this.props.addPlayer} signUpChallenge={this.props.signUpChallenge} history={this.props.history}/>
         {React.cloneElement(this.props.children, this.props)}
       </div>
     );
   }
 }
-/* <Spinner hidden={this.props.loading}/> */
-//
+
 //Attach store and app actions to App
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
