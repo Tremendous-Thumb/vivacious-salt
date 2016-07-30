@@ -12,8 +12,8 @@ let generateUrl = (req, res) => {
 
   const params = {
     Bucket: process.env.bucket,
-    Key: 'pokemon3',
-    ContentType: 'image/png',
+    Key: 'vid.MOV',
+    ContentType: 'video/quicktime',
     ACL: 'public-read'
   };
 

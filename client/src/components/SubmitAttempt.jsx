@@ -19,12 +19,7 @@ let getUrl = () => {
       console.log('didnt get anything');
     });
 };
-//
-// axios.get('/presign')
-//   .then((response) => {
-//     console.log('whats the response', reponse);
-//   })
-//
+
 let postVideoS3 = (data) => {
   console.log(data);
   return new Promise((resolve, reject) => {
@@ -32,7 +27,7 @@ let postVideoS3 = (data) => {
       type: 'PUT',
       url: data.preSignedUrl,
       processData: false,
-      contentType: 'image/png',
+      contentType: 'video/quicktime',
       data: data.file,
       success: function() {
         resolve(data);
@@ -52,7 +47,7 @@ let postValidUrlS3 = (data) => {
       type: 'POST',
       url: '/presign',
       dataType: 'json',
-      data: obj,
+      data: data.publicUrl,
       success: function() {
         resolve(data);
         return console.log('this url is sent to aws');
@@ -94,26 +89,10 @@ class SubmitAttempt extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    // var form = new FormData();
-    // var data = this.state.files;
-    // console.log('is this videp', data[0]);
-    // var blob = new Blob([data[0]], {type: 'image/png'});
-    // form.append('blob', blob);
-    // getUrl()
-    //   .then((data) => {
-    //     console..log('this url');
-    //     // data.file = form;
-    //     // console.log('file data', data.file);
-    //     console.log('whats kind of data is this', data);
-    //     return postVideoS3(data);
-    //   })
-    //   .catch((err) => {
-    //     throw err;
-    //   });
 
     getUrl()
       .then((data) => {
-        var file = document.getElementById('file').files[0];
+        // var file = document.getElementById('file').files[0];
         // var fd = new FormData();
         // fd.append('file', file);
         data.file = this.state.files[0];
@@ -127,28 +106,7 @@ class SubmitAttempt extends React.Component {
         throw err;
       });
 
-    // getUrl()
-    //   .then((data) => {
-    //     var file = document.getElementById('file').files[0];
-    //     var fd = new FormData();
-    //
-    //     fd.append("file", file);
-    //
-    //     var xhr = new XMLHttpRequest();
-    //
-    //     xhr.addEventListener("load", function () {
-    //       console.log("uploaded");
-    //     }, false);
-    //
-    //     xhr.open('PUT', data.preSignedUrl, true); //MUST BE LAST LINE BEFORE YOU SEND
-    //     xhr.send(fd);
-    //   });
   }
-
-
-
-
-
 
   render() {
     return (
@@ -169,12 +127,6 @@ class SubmitAttempt extends React.Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     userId: currentUser.user ? currentUser.user.id : null
-//   };
-// }
 
-// export default connect(mapStateToProps, null)(SubmitAttempt);
 
 export default SubmitAttempt;
