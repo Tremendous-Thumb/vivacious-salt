@@ -30,7 +30,7 @@ const PendingApprovalListEntry = ({player, handleClick, entities, challengeId })
           if(player.attemptVisible && data.attempt){
             return (
               <div>
-                <Link to={"/challenges/" + challengeId + "/submissionReview"}>View Submission</Link>
+                <Link to={"/challenges/" + challengeId + "/" + player.id + "/submissionReview"}>View Submission</Link>
               </div>
             );
 

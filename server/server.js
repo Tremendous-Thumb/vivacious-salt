@@ -54,7 +54,7 @@ app.get('/challenges', mid.protectApi, db.challenge.getAll);
 app.get('/users', mid.protectApi, db.user.getAll);
 app.get('/userInfo', db.user.get);
 app.get('/:challengeId/admin/getChallengers', db.challenge.admin);
-app.get('/:challengeId/admin/acceptSubmission', db.challenge.acceptSubmission);
+app.post('/:challengeId/admin/acceptSubmission', db.challenge.acceptSubmission);
 app.get('/:challengeId/admin/viewSubmission', db.challenge.getSubmissionData);
 app.post('/signup', mid.checkMultipleSignUp, db.challenge.accept);
 app.post('/cancel', db.challenge.cancel);

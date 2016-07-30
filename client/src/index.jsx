@@ -20,7 +20,7 @@ ReactDOM.render((
             <Route path="create" component={ChallengeCreateForm} />
             <Route path=":challengeId" component={PlayerView} />
             <Route path=":challengeId/admin" component={AdminPanel} />
-            <Route path=":challengeId/submissionReview" component={SubmissionReview} />
+            <Route path=":challengeId/:playerId/submissionReview" component={SubmissionReview} />
             <Route path=":challengeId/submission" component={SubmitAttempt} />
           </Route>
           <Route path="login" component={Login} />
