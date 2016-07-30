@@ -3,25 +3,19 @@ require('dotenv').config();
 //
 AWS.config.update({accessKeyId: process.env.accessKeyId, secretAccessKey: process.env.secretAccessKey});
 AWS.config.update({region: 'us-west-2'});
-//
+
+const db = require('./db/sequelize');
+
 let generateUrl = (req, res) => {
 
   var s3 = new AWS.S3();
 
   const params = {
     Bucket: process.env.bucket,
-    Key: 'pokemon1',
+    Key: 'pokemon3',
     ContentType: 'image/png',
     ACL: 'public-read'
   };
-
- //  s3.upload(parms, function(err, data) {
- //    if (err) {
- //     console.log("Error uploading data: ", err);
- //   } else {
- //     console.log("Successfully uploaded data to myBucket/myKey");
- //   }
- // });
 
   let preSignedUrl = s3.getSignedUrl('putObject', params);
   console.log('what is presign', preSignedUrl);
@@ -30,18 +24,48 @@ let generateUrl = (req, res) => {
   // res.send('something');
   res.send({preSignedUrl: preSignedUrl, publicUrl: publicUrl});
 };
-//
-// let createVideoDb = (req, res) => {
-//   console.log('url is sent here');
-//   console.log('whats in here', req);
-//   // req.body
-//   //
-//   // .create({
-//   //   media
-//   // })
-// };
+
+let createVideoDb = (req, res) => {
+  console.log('whats in here', req.body);
+
+  let url = Object.keys(req.body)[0];
+
+  var facebookSession = req.sessionStore.sessions;
+  var faceId;
+  for (var key in facebookSession) {
+    var fid = JSON.parse(facebookSession[key])
+    if (fid.passport) {
+      faceId = fid.passport.user.id;
+    }
+  }
+
+  db.User.find({ where: { userId: faceId } })
+  .then((user) => {
+    console.log('is this valid', user);
+    // gets the challenge ID from the selected challenge
+    model.Challenge.find({ where: { id: req.body.challengeId } })
+      .then((challenge) => {
+        // increments the count of number of challenges who accepted challenge
+        challenge.increment(['challengers']);
+        // saves userId and challengeId in join table
+        model.Users_challenge.find({
+          userId: user.dataValues.id,
+          challengeId: challenge.dataValues.id,
+        })
+        // creates an entry in proof table for creator of challenge to approve
+        .then((usersChallenge) => {
+          model.Proof.update({
+            usersChallengeId: usersChallenge.dataValues.id,
+            creatorAccepted: false,
+            media: url
+          });
+        });
+      });
+  });
+
+};
 
 
 
 module.exports.generateUrl = generateUrl;
-// module.exports.createVideoDb = createVideoDb;
+module.exports.createVideoDb = createVideoDb;
