@@ -45,7 +45,7 @@ class ChallengeListEntry extends React.Component {
     super(props);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleComplete = this.handleComplete.bind(this);
+    this.handelCancel = this.handleCancel.bind(this);
   }
 
 
@@ -112,13 +112,5 @@ class ChallengeListEntry extends React.Component {
     );
   }
 }
-
-ChallengeListEntry.propTypes = {
-  challenge: React.PropTypes.object.isRequired
-};
-
-ChallengeListEntry.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
 
 export default ChallengeListEntry;

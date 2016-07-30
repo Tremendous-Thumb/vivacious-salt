@@ -29,7 +29,6 @@ ReactDOM.render((
           </Route>
           <Route path="login" component={Login} />
           <Route path="users/:userId" component={UserProfile} >
-            <Route path="submission" component={UserProfileInfo} />
           </Route>
         </Route>
       </Router>
