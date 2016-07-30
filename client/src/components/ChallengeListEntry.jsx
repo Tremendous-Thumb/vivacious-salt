@@ -65,7 +65,9 @@ class ChallengeListEntry extends React.Component {
 
   handleCancel(e) {
     const id = this.props.challenge.id;
+    console.log('cancel challenge pressed');
     // make call to remove challenge from their challengesTaken
+    this.props.cancelChallenge(this.props.currentUser, this.props.challenge.id);
   }
 
   render() {
