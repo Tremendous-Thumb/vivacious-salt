@@ -12,6 +12,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 global.navigator = { userAgent: 'all' };
+process.setMaxListeners(0);
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,6 +54,8 @@ app.get('/challenges', mid.protectApi, db.challenge.getAll);
 app.get('/users', mid.protectApi, db.user.getAll);
 app.get('/userInfo', db.user.get);
 app.get('/:challengeId/admin/getChallengers', db.challenge.admin);
+app.get('/:challengeId/admin/acceptSubmission', db.challenge.acceptSubmission);
+app.get('/:challengeId/admin/viewSubmission', db.challenge.getSubmissionData);
 app.post('/signup', mid.checkMultipleSignUp, db.challenge.accept);
 app.post('/createChallenge', db.challenge.create);
 app.post('/:challengeId/updateChallenge', db.challenge.update);

@@ -1,6 +1,8 @@
 const model = require('../sequelize.js');
 const deleteChallenge = require('./deleteChallenge.js');
 const updateChallenge = require('./updateChallenge.js');
+const acceptSubmission = require('./acceptSubmission.js');
+const getSubmissionData = require('./getSubmissionData.js')
 const Promise = require('bluebird');
 const detailHelper = require('../helpers.js').detailHelper;
 
@@ -158,9 +160,9 @@ module.exports = {
       });
         // res.send('Challenge created')
     },
-
+    getSubmissionData: getSubmissionData,
     update: updateChallenge,
-
+    acceptSubmission: acceptSubmission,
     accept: (req, res) => {
       // grabs the userid of the user who accepted the challenge
       var facebookSession = req.sessionStore.sessions;

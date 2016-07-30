@@ -10,5 +10,5 @@ module.exports = function(req, res) {
   })
   .then((destroyed) => {
     res.redirect('/');
-  })
+  });
 };

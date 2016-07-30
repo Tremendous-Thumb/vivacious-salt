@@ -4,29 +4,50 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
+import axios from 'axios';
 
 const imageStyle = {
   width: '100%',
   height: '400px',
   overflow: 'hidden'
-}
+};
 
 export default class SubmissionReview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       acceptedSubmission: false,
-      rejectedSubmission: false
+      rejectedSubmission: false,
+      proofUrl: ''
     };
+  }
+
+  componentWillMount() {
+    const id = this.props.params.challengeId;
+
+    axios.get('/' + id + '/admin/viewSubmission')
+    .then((proof) => {
+      console.log('got the PROOF', proof);
+      this.setState({
+        proofUrl: proof.url
+      });
+    });
   }
 
   handleClick(e){
     e.preventDefault();
+    const id = this.props.params.challengeId;
     if (e.currentTarget.value === "Accept"){
       console.log('submission accepted');
       this.setState({
         acceptedSubmission: true
       });
+
+      axios.post('/' + id + '/admin/acceptSubmission')
+      .then((response) => {
+        console.log(response);
+      });
+
     } else {
       console.log('submission rejected');
       this.setState({
@@ -56,6 +77,7 @@ export default class SubmissionReview extends React.Component {
         </CardMedia>
         <CardTitle title={challenge.name} subtitle={challenge.category} />
         <div>THEIR SUBMISSION INFO HERE</div>
+        <img src={this.state.proofUrl} alt=""/>
         <CardText>
           <div className="row">
             <div className={"col s3 " + hideAccept}>
