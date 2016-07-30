@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(100),
   url TEXT,
   facebookId TEXT,
+  points INTEGER,
   createdAt TIMESTAMP WITH TIME ZONE DEFAULT now() 
 );
 
