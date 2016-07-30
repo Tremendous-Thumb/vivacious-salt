@@ -26,7 +26,7 @@ class ChallengeList extends React.Component {
         {challenges.map((challenge) => {
           return (
             <div key={challenge.id}>
-              <ChallengeListEntry challenge={challenge} addPlayer={this.props.addPlayer} currentUser={this.props.currentUser} signUpChallenge={this.props.signUpChallenge} />
+              <ChallengeListEntry challenge={challenge} addPlayer={this.props.addPlayer} currentUser={this.props.currentUser} signUpChallenge={this.props.signUpChallenge} cancelChallenge={this.props.cancelChallenge} />
             </div>
           );
         })}
