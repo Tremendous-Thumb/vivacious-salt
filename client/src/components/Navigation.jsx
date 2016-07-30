@@ -19,6 +19,6 @@ const Navigation = ({challenges, currentUser, entities, addPlayer, signUpChallen
       <Link to="/challenges/create"><span className="right linkStyle">Create Challenge</span></Link>
     </nav>
   );
-}
+};
 
 export default Navigation;

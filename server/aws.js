@@ -28,37 +28,36 @@ let generateUrl = (req, res) => {
 let createVideoDb = (req, res) => {
   console.log('whats in here', req.body);
 
-  let url = Object.keys(req.body)[0];
 
   var facebookSession = req.sessionStore.sessions;
+  console.log('facebookSession: ', facebookSession);
   var faceId;
   for (var key in facebookSession) {
-    var fid = JSON.parse(facebookSession[key])
+    var fid = JSON.parse(facebookSession[key]);
     if (fid.passport) {
       faceId = fid.passport.user.id;
     }
   }
 
-  db.User.find({ where: { userId: faceId } })
+  db.User.find({ where: { facebookId: faceId } })
   .then((user) => {
     console.log('is this valid', user);
     // gets the challenge ID from the selected challenge
-    model.Challenge.find({ where: { id: req.body.challengeId } })
+    db.Challenge.find({ where: { id: req.body.challengeId } })
       .then((challenge) => {
         // increments the count of number of challenges who accepted challenge
-        challenge.increment(['challengers']);
+        // db.challenge.increment(['challengers']);
         // saves userId and challengeId in join table
-        model.Users_challenge.find({
+        db.Users_challenge.find({
           userId: user.dataValues.id,
           challengeId: challenge.dataValues.id,
         })
         // creates an entry in proof table for creator of challenge to approve
         .then((usersChallenge) => {
-          model.Proof.update({
-            usersChallengeId: usersChallenge.dataValues.id,
-            creatorAccepted: false,
-            media: url
-          });
+          console.log('am i getting here');
+          db.Proof.update({
+            media: req.body.publicUrl
+          }, {where: {creatorAccepted: true }});
         });
       });
   });

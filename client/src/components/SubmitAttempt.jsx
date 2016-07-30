@@ -41,13 +41,15 @@ let postVideoS3 = (data) => {
 
 let postValidUrlS3 = (data) => {
   console.log('is this puyblic url', data.publicUrl);
-
+  console.log('is this challenge id', data.challengeId);
+  let obj = {publicUrl: data.publicUrl, challengeId: data.challengeId};
   return new Promise((resolve, reject) => {
+
     $.ajax({
       type: 'POST',
       url: '/presign',
-      dataType: 'json',
-      data: data.publicUrl,
+      dataType: 'application/json',
+      data: obj,
       success: function() {
         resolve(data);
         return console.log('this url is sent to aws');
@@ -95,6 +97,7 @@ class SubmitAttempt extends React.Component {
         // var file = document.getElementById('file').files[0];
         // var fd = new FormData();
         // fd.append('file', file);
+        data.challengeId = this.props.params.challengeId;
         data.file = this.state.files[0];
         return postVideoS3(data);
       })
@@ -109,6 +112,7 @@ class SubmitAttempt extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <Dropzone ref='dropzone' onDrop={this.onDrop.bind(this)} >
