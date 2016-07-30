@@ -191,6 +191,7 @@ module.exports = {
               model.Proof.create({
                 usersChallengeId: usersChallenge.dataValues.id,
                 creatorAccepted: false,
+                media: ''
               })
               .then((proof) => {
                 res.json({'accepted': 'true'});
