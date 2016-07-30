@@ -1,7 +1,9 @@
 import React from 'react';
+import {PropTypes} from 'react';
 import { Card, CardActions, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import { Link } from 'react-router';
+import {GridList, GridTile} from 'material-ui/GridList';
 
 const buttonStyle = {
   margin: 12,
@@ -38,12 +40,14 @@ const imageStyle = {
 
 // Needs more styling depending on fields
 class ChallengeListEntry extends React.Component {
+
   constructor(props) {
     super(props);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
   }
+
 
   handleSignUp() {
     if (!this.props.currentUser) {
@@ -63,6 +67,7 @@ class ChallengeListEntry extends React.Component {
     this.context.router.push(`/challenges/${id}`);
   }
 
+
   handleCancel(e) {
     const id = this.props.challenge.id;
     console.log('cancel challenge pressed');
@@ -73,7 +78,7 @@ class ChallengeListEntry extends React.Component {
   render() {
     console.log('render challenge list entry');
     let moneyClass = 'bling';
-    if(this.props.challenge.reward < 0) {
+    if (this.props.challenge.reward < 0) {
       moneyClass = 'pay';
     }
 
@@ -94,6 +99,7 @@ class ChallengeListEntry extends React.Component {
         </CardMedia>
         <CardTitle style={titleStyle} title={this.props.challenge.name} subtitle={this.props.challenge.category} />
         <CardText style={textStyle}>
+
           <div className="reward">This challenge is worth <span className={moneyClass}>${this.props.challenge.reward}</span></div>
           <div>{this.props.challenge.description}</div>
           <br />

@@ -2,6 +2,7 @@ import React from 'react';
 import ChallengeListEntry from './ChallengeListEntry.jsx';
 import _ from 'lodash';
 //Takes in props.challenges, and maps over to create ChallengeListEntry
+
 class ChallengeList extends React.Component {
   constructor(props) {
     super(props);
