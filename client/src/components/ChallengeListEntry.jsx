@@ -48,12 +48,6 @@ class ChallengeListEntry extends React.Component {
     this.handleComplete = this.handleComplete.bind(this);
   }
 
-  handleComplete() {
-    const id = this.props.challenge.id;
-    this.props.challenge.currentChallengers.forEach(playerId => { this.props.addPlayer(id, playerId); });
-    const loc = this.props.challenge.userId === this.props.currentUser.id ? `/challenges/${id}/admin` : `/challenges/${id}/submission`;
-    this.context.router.push(loc);
-  }
 
   handleSignUp() {
     if (!this.props.currentUser) {
@@ -73,16 +67,31 @@ class ChallengeListEntry extends React.Component {
     this.context.router.push(`/challenges/${id}`);
   }
 
-  handleView(e) {
-    e.preventDefault();
 
+  handleCancel(e) {
+    const id = this.props.challenge.id;
+    console.log('cancel challenge pressed');
+    // make call to remove challenge from their challengesTaken
+    this.props.cancelChallenge(this.props.currentUser, this.props.challenge.id);
   }
 
   render() {
+    console.log('render challenge list entry');
     let moneyClass = 'bling';
     if (this.props.challenge.reward < 0) {
       moneyClass = 'pay';
     }
+
+    let signUpOrCancel = (<RaisedButton label="Step Up!" style={buttonStyle} backgroundColor="#fdd835" onTouchTap={this.handleSignUp}/>);
+    if (this.props.currentUser) {
+      // iterate over user's challengesTaken
+      for (var i = 0; i < this.props.currentUser.challengesTaken.length; i++) {
+        if (this.props.currentUser.challengesTaken[i].id === this.props.challenge.id) {
+          signUpOrCancel = (<RaisedButton label="Back Down!" style={buttonStyle} backgroundColor="#ff5555" onTouchTap={this.handleCancel}/>);
+        }
+      }
+    }
+
     return (
       <Card style={cardStyle} >
         <CardMedia style={imageStyle} onClick={this.handleClick}>
@@ -97,8 +106,7 @@ class ChallengeListEntry extends React.Component {
           <div>{this.props.challenge.successes} out of {this.props.challenge.challengers} challengers have completed this challenge! </div>
         </CardText>
         <CardActions>
-          <RaisedButton label="Complete" style={buttonStyle} backgroundColor="#61CBFF" onTouchTap={this.handleComplete} />
-          <RaisedButton label="Sign Up!" style={buttonStyle} backgroundColor="#fdd835" onTouchTap={this.handleSignUp} />
+          {signUpOrCancel}
         </CardActions>
       </Card>
     );

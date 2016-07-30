@@ -4,8 +4,11 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
-import { App, Main, Login, UserProfile, ChallengeContainer, AdminPanel, AdminChallenge,
-        ChallengeCreateForm, PlayerView, SubmitAttempt, UserProfileInfo }
+
+import { App, Main, Login, UserProfile, ChallengeContainer, AdminPanel,
+        ChallengeCreateForm, PlayerView, SubmitAttempt, SubmissionReview }
+
+
 from './components/Components.js';
 
 import { Provider } from 'react-redux';
@@ -21,6 +24,7 @@ ReactDOM.render((
             <Route path="create" component={ChallengeCreateForm} />
             <Route path=":challengeId" component={PlayerView} />
             <Route path=":challengeId/admin" component={AdminPanel} />
+            <Route path=":challengeId/submissionReview" component={SubmissionReview} />
             <Route path=":challengeId/submission" component={SubmitAttempt} />
           </Route>
           <Route path="login" component={Login} />

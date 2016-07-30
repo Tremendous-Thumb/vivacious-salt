@@ -110,7 +110,7 @@ class ChallengeCreateForm extends React.Component {
           name="reward"
           floatingLabelFixed={true}
           onChange={this.handleFormChanges.bind(this)}
-        />
+         />
         <br />
         <div className="input-field">
           <input

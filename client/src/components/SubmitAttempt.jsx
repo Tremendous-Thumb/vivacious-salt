@@ -1,7 +1,5 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import axios from 'axios';
-import {connect} from 'react-redux'
 
 
 
@@ -62,6 +60,8 @@ let postValidUrlS3 = (data) => {
 
 
 
+
+
 class SubmitAttempt extends React.Component {
   constructor(props) {
     super(props);
@@ -81,8 +81,8 @@ class SubmitAttempt extends React.Component {
     this.refs.dropzone.open();
   }
 
-  onDrop(files) {
 
+  onDrop(files) {
     this.setState({
       files: files
     });
@@ -93,9 +93,7 @@ class SubmitAttempt extends React.Component {
 
     getUrl()
       .then((data) => {
-        // var file = document.getElementById('file').files[0];
-        // var fd = new FormData();
-        // fd.append('file', file);
+
         data.challengeId = this.props.params.challengeId;
         data.file = this.state.files[0];
         return postVideoS3(data);
@@ -110,23 +108,22 @@ class SubmitAttempt extends React.Component {
 
   }
 
-  render() {
 
+
+
+  render() {
     return (
       <div>
-        <Dropzone ref='dropzone' onDrop={this.onDrop.bind(this)} >
-          <div>Drop YOUR PROOF HERE</div>
+        <Dropzone ref="dropzone" onDrop={this.onDrop}>
+          <div></div>
         </Dropzone>
-        <input type="file" name="file" id="file"/>
-        <button type="button" onClick={this.onOpenClick.bind(this)}>
-                 Open Dropzone
-        </button>
-        <button type="button" onClick={this.onSubmit.bind(this)} >
-          Submit Video
-        </button>
+        <div>
+          <button onClick={this.onOpenClick.bind(this)}> Attach File </button>
+          <button onClick={this.submit.bind(this)}>Submit Proof</button>
+        </div>
         {this.state.files.length > 0 ? <div>
-        <h2>Uploading {this.state.files.length} files...</h2>
-        <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
+          <h2>Uploading {this.state.files.length} files...</h2>
+          <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
         </div> : null}
       </div>
     );

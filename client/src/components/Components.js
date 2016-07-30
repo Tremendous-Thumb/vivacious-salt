@@ -7,5 +7,7 @@ import PlayerView from './PlayerView.jsx';
 import SubmitAttempt from './SubmitAttempt.jsx';
 import Navigation from './Navigation.jsx';
 import ChallengeContainer from './ChallengeContainer.jsx';
+import SubmissionReview from './admin/SubmissionReview.jsx';
 
-export { App, Main, AdminPanel, ChallengeCreateForm, UserProfile, PlayerView, SubmitAttempt, Navigation, ChallengeContainer };
+export { App, Main, AdminPanel, ChallengeCreateForm, UserProfile,
+   PlayerView, SubmitAttempt, Navigation, ChallengeContainer, SubmissionReview };

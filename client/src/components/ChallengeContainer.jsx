@@ -24,9 +24,9 @@ class ChallengeContainer extends React.Component {
     console.log('this children', this.props.children);
     return (
       <div>
-        {this.props.children && React.cloneElement(self.props.children, passedProps)};
+        {this.props.children && React.cloneElement(self.props.children, passedProps)}
       </div>
-    )
+    );
   }
 }
 

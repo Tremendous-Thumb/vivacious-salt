@@ -35,9 +35,11 @@ module.exports.checkMultipleSignUp = function (req, res, next) {
 }
 
 module.exports.isLoggedIn = function (req, res, next) {
-  console.log('checking sessionstore', req.sessionStore)
-  if (!res.sessionStore || !req.sessionStore.sessions) {
-    return res.redirect('/');
+  console.log('checking if logged in');
+  if (!req.isAuthenticated() || !req.session) {
+    console.log('redirecting to splash');
+    return res.redirect('/splash');
   }
+  console.log('authorized!');
   return next();
-}
+};

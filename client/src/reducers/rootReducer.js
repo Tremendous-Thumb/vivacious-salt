@@ -26,11 +26,3 @@ function currentUser(state = null, action) {
   }
   return state;
 }
-
-
-
-const rootReducer = combineReducers(
-  {entities, currentUser, playersOfUserChallenges, challengeList, routing: routerReducer}
-);
-
-export default rootReducer;

@@ -1,7 +1,10 @@
 const model = require('../sequelize.js');
 const deleteChallenge = require('./deleteChallenge.js');
 const updateChallenge = require('./updateChallenge.js');
+const acceptSubmission = require('./acceptSubmission.js');
+const getSubmissionData = require('./getSubmissionData.js')
 const Promise = require('bluebird');
+const detailHelper = require('../helpers.js').detailHelper;
 
 module.exports = {
   user: {
@@ -31,10 +34,11 @@ module.exports = {
       let faceId;
       for (var key in facebookSession) {
         var fid = JSON.parse(facebookSession[key])
-        if (fid.passport) {
+        if (fid.passport && fid.passport.user) {
           faceId = fid.passport.user.id;
         }
       }
+      console.log('faceid', faceId);
       // search for user from facebookId req.user is the session information stored in every req
       // model.User.find({ where: { facebookId: req.user.id } })
       detailHelper(faceId)
@@ -156,9 +160,9 @@ module.exports = {
       });
         // res.send('Challenge created')
     },
-
+    getSubmissionData: getSubmissionData,
     update: updateChallenge,
-
+    acceptSubmission: acceptSubmission,
     accept: (req, res) => {
       // grabs the userid of the user who accepted the challenge
       var facebookSession = req.sessionStore.sessions;
@@ -189,6 +193,7 @@ module.exports = {
               model.Proof.create({
                 usersChallengeId: usersChallenge.dataValues.id,
                 creatorAccepted: false,
+                media: ''
               })
               .then((proof) => {
                 res.json({'accepted': 'true'});
@@ -196,6 +201,48 @@ module.exports = {
             });
           });
       });
+    },
+
+    cancel: (req, res) => {
+      // grabs the ID of whoever cancels the challenge
+      var facebookSession = req.sessionStore.sessions;
+      var FaceId;
+      for (var key in facebookSession) {
+        var fid = JSON.parse(facebookSession[key])
+        if (fid.passport) {
+          faceId = fid.passport.user.id;
+        }
+      }
+      // get the user's information
+      model.User.find({ where: {facebookId: faceId }})
+      .then((user) => {
+        // get the challenge ID from the selected challenge
+        model.Challenge.find( {where: {id: req.body.challengeId }})
+        .then((challenge) => {
+          // get the user_challenge to find proof
+          model.Users_challenge.find({ where: {
+            userId: user.dataValues.id,
+            challengeId: challenge.dataValues.id
+          }})
+          .then((usersChallenge) => {
+            //remove the proof row for the user/challenge
+            model.Proof.destroy({ where: {
+              usersChallengeId: usersChallenge.dataValues.id
+            }});
+            // decrement the count of challengers
+            challenge.decrement(['challengers']);
+            // remove it's listing from the join table
+            model.Users_challenge.destroy({ where: {
+              userId: user.dataValues.id,
+              challengeId: challenge.dataValues.id
+            }})
+            .then((something) => {
+              res.json(something);
+            });
+          })
+        });
+      })
+
     },
 
     delete: deleteChallenge,
@@ -222,11 +269,15 @@ module.exports = {
     admin: (req, res) => {
       let adminChallenge;
       // finds current challenge
-      model.Challenge.find({ where: req.body.challengeId })
+      console.log('!!!!!!!!admin request!!!!!');
+      model.Challenge.find({ where: {
+        id: req.params.challengeId
+      }
+    })
       .then((challenge) => {
         adminChallenge = challenge.dataValues;
         // finds list of users who have accepted challenge
-        model.Users_challenge.findAll({ where: { challengeId: req.body.challengeId } })
+        model.Users_challenge.findAll({ where: { challengeId: req.params.challengeId } })
         .then((usersChallenges) => {
           const usersArray = usersChallenges.map(userChallenge =>
             model.User.find({ where: userChallenge.dataValues.userId })
@@ -240,61 +291,4 @@ module.exports = {
       });
     },
   },
-};
-
-const detailHelper = (faceId) => {
-  let userInfo
-  let userObj;
-  
-  return model.User.find({ where: { facebookId: faceId } })
-  .then((user) => {
-    userObj = user;
-    userInfo = user.dataValues;
-    // search for all challenges created by user
-    return model.Challenge.findAll({ where: { userId: user.dataValues.id } })
-  })
-  .then((challenges) => {
-    // saves all challenges created by user to challengesCreated
-    userInfo.challengesCreated = challenges.map(challenge => challenge.dataValues);
-    // search and save all challenges taken by user
-    // search Users_challenges table records with user's id
-    return model.Users_challenge.findAll({ where: { userId: userObj.dataValues.id } })
-  })
-  .then((userChallenges) => {
-    // for each entry in Uses'_challenge table search Challenes table for data
-    const arrayOfPromises = userChallenges.map(userChallenge =>
-       model.Challenge.find({ where: { id: userChallenge.dataValues.challengeId } })
-    );
-
-    return Promise.all(arrayOfPromises);
-  })
-  .then((arrayOfChallengesTaken) => {
-    // save all challenesTaken to results.challengesTaken
-    userInfo.challengesTaken = arrayOfChallengesTaken
-      .map(challengesTaken => challengesTaken.dataValues);
-    // search and save all challenges completed and approved
-    // search Users_challenges table to find all approved user challenges
-    return model.Users_challenge.findAll({
-      where: { userId: userObj.dataValues.id },
-      include: [{
-        model: model.Proof,
-        where: { creatorAccepted: true },
-      }],
-    });
-  })
-  .then((approvedChallenges) => {
-    const arrayOfApprovedChallenges = approvedChallenges
-      .map(approvedChallenge => model.Challenge
-          .find({ where: approvedChallenge.dataValues.challengeId }));
-    return Promise.all(arrayOfApprovedChallenges);
-  })
-  .then((resolvedChallenges) => {
-    userInfo.challengesCompleted = resolvedChallenges.map(challenge =>
-      challenge.dataValues);
-    // returns object will all users each of the challenges they have created,
-    // each of the challenges they have accepted, and each of the challenges they
-    // have completed
-
-    return userInfo;
-  });
 };

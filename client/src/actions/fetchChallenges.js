@@ -1,3 +1,5 @@
+import { fetchUsers } from './fetchUsers';
+
 export function receiveChallenges(challenges) {
   return {
     type: 'RECEIVE_CHALLENGE_LIST',
@@ -17,9 +19,11 @@ export function fetchChallenges() {
         if (!res.ok) {
           throw Error(res.statusText);
         }
+        console.log('fetch')
         return res.json();
        })
       .then(json => dispatch(receiveChallenges(json)))
+      .then(() => dispatch(fetchUsers()))
       .catch(err => console.log(err))
   }
 }
